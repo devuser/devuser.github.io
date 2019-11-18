@@ -66,9 +66,84 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-金融街笔记/金融街三原则" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-GolangNotes/0-1-在Windows下编译Golang程序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/01/03/金融街笔记/金融街三原则/" class="article-date">
+    <a href="/2019/01/03/GolangNotes/0-1-在Windows下编译Golang程序/" class="article-date">
+  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/GolangNotes/0-1-在Windows下编译Golang程序/">Windows下编译Golang</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>建议维持如下目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foo --&gt;src</span><br><span class="line">    --&gt;bin</span><br><span class="line">    --&gt;pkg</span><br></pre></td></tr></table></figure>
+<p>编译过程一般来说分成如下几步</p>
+<ol>
+<li><p>前从 <code>git/svn</code> 服务器抓取最新的版本</p>
+</li>
+<li><p>清理现场</p>
+</li>
+<li><p>获得时间戳，以便在后续编译过程中带入作为版本号的后缀</p>
+</li>
+<li><p>编译，携带若干参数（资源文件、不含调试信息、版本号，目标文件名称）</p>
+</li>
+<li><p>复制到特定文件夹</p>
+</li>
+<li><p>连同配置文件一起压缩，压缩文件带有上述时间戳</p>
+</li>
+<li><p>导出源代码，并压缩，压缩文件带有上述时间戳</p>
+</li>
+<li><p>清理现场</p>
+</li>
+</ol>
+<p>上述步骤连续做下来，没有一个工程师可以可以连续无差错做两遍。 这样的场景适合创建一个批处理文件，如果在Linux下的话就是Shell脚本文件。</p>
+<p>下面是一个批处理文件的示例，请参阅。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@echo off</span><br><span class="line">echo 编译打包命令如下</span><br><span class="line">echo ==========================================</span><br><span class="line">set /a t1=(1%time:~0,2%-100)*1</span><br><span class="line">if %t1% LSS 10 set t1=0%t1%</span><br><span class="line">set ymd_hm=%date:~0,4%%date:~5,2%%date:~8,2%%t1%%time:~3,2%%time:~6,2%</span><br><span class="line">set &quot;Version=v2.2.%ymd_hm%&quot;</span><br><span class="line">echo 版本号: %Version%</span><br><span class="line">@echo on</span><br><span class="line">go clean</span><br><span class="line">go build -o YOUR_PROGRAMNAME.exe -ldflags &quot;-s -w -X main._VERSION_ &apos;%Version%&apos;&quot;</span><br><span class="line">set PATH=%PATH%;C:\Program Files\WinRAR;</span><br><span class="line">copy YOUR_PROGRAMNAME.exe &quot;YOUR_PROGRAMNAME_v%ymd_hm%.exe&quot;</span><br><span class="line">rar a &quot;YOUR_PROGRAMNAME_v%ymd_hm%.ra_&quot; &quot;YOUR_PROGRAMNAME_v%ymd_hm%.exe&quot;</span><br><span class="line">@echo off</span><br><span class="line">echo ==========================================</span><br><span class="line">@echo on</span><br></pre></td></tr></table></figure>
+<p>如果要支持上述代码中的，在编译命令中引入版本号，那么需要在源代码文件， 即包含 <code>main</code> 方法的 <code>go</code> 文件中包含如下变量定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//如下变量供编译器使用，不适用于golint的修改建议</span><br><span class="line">var _VERSION_ = &quot;unknown&quot;</span><br></pre></td></tr></table></figure>
+<p>BTW</p>
+<ol>
+<li><p><code>golint</code> 认为上述变量命名不符合规范，请忽略之</p>
+</li>
+<li><p>关于 <code>Windows</code>下批处理文件的更多知识，请 <code>google</code> 之</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/0-1-在Windows下编译Golang程序/" data-id="ck33wmx4q000x4mnpbog3ar27" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-金融街笔记/昆山" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/03/金融街笔记/昆山/" class="article-date">
   <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
 </a>
     
@@ -84,7 +159,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/金融街笔记/金融街三原则/">金融街三原则</a>
+      <a class="article-title" href="/2019/01/03/金融街笔记/昆山/">昆山</a>
     </h1>
   
 
@@ -92,15 +167,178 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>金融街笔记20180722</p>
-<p>①农民身份种地心态，世代相传，邻里守望，更关注长期价值，更关注协同</p>
-<p>②当差，接纳当下的角色分工，做该做的事情</p>
-<p>③办事，抓住关键要务</p>
+        <p>昆山对房地产业太重要了，有多家五十强公司从本省出发，第一站放在昆山，在昆山坐稳了再进军全国。</p>
+<p>昆山是从省内公司向全国性公司的重要节点，在特别的时间段里，甚至是唯一的可成功节点。</p>
+<p>既然昆山是可<strong>成功节点</strong>，那肯定有必失败节点。哪些城市是必失败节点呢？</p>
+<p>背后的深层次原因是什么呢？</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/金融街笔记/金融街三原则/" data-id="ck33wf1gq007820nptxx643ln" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/金融街笔记/昆山/" data-id="ck33wmxef00a84mnp0y5e2p6n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/房地产/">房地产</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/昆山/">昆山</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/Dockerfile-for-Alpine+Golang" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/03/GolangNotes/Dockerfile-for-Alpine+Golang/" class="article-date">
+  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/GolangNotes/Dockerfile-for-Alpine+Golang/">Dockerfile for Alpine+Golang</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Dockerfile for Alpine+Golang</p>
+<p>在开发环境，测试环境下使用Golang的Docker镜像。 目前使用两个Dockerfile，一个基于Alpine，一个基于CentOS。</p>
+<p>使用时请注意修改掉私人有关的内容。</p>
+<p>Dockerfile for Alpine+Golang</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">FROM alpine:latest</span><br><span class="line"></span><br><span class="line">RUN apk add --no-cache \</span><br><span class="line">        ca-certificates</span><br><span class="line"></span><br><span class="line"># set up nsswitch.conf for Go&apos;s &quot;netgo&quot; implementation</span><br><span class="line"># - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275</span><br><span class="line"># - Docker run --rm debian:stretch grep &apos;^hosts:&apos; /etc/nsswitch.conf</span><br><span class="line">RUN [ ! -e /etc/nsswitch.conf ] &amp;&amp; echo &apos;hosts: files dns&apos; &gt; /etc/nsswitch.conf</span><br><span class="line"></span><br><span class="line">ENV GOLANG_VERSION 1.12.3</span><br><span class="line"></span><br><span class="line">RUN set -eux; \</span><br><span class="line">    apk add --no-cache --virtual .build-deps bash gcc musl-dev openssl gcc musl-dev go git\</span><br><span class="line">    ; \</span><br><span class="line">    export \</span><br><span class="line"># set GOROOT_BOOTSTRAP such that we can actually build Go</span><br><span class="line">        GOROOT_BOOTSTRAP=&quot;$(go env GOROOT)&quot; \</span><br><span class="line"># ... and set &quot;cross-building&quot; related vars to the installed system&apos;s values so that we create a build targeting the proper arch</span><br><span class="line"># (for example, if our build host is GOARCH=amd64, but our build env/image is GOARCH=386, our build needs GOARCH=386)</span><br><span class="line">        GOOS=&quot;$(go env GOOS)&quot; \</span><br><span class="line">        GOARCH=&quot;$(go env GOARCH)&quot; \</span><br><span class="line">        GOHOSTOS=&quot;$(go env GOHOSTOS)&quot; \</span><br><span class="line">        GOHOSTARCH=&quot;$(go env GOHOSTARCH)&quot; \</span><br><span class="line">    ; \</span><br><span class="line"># also explicitly set GO386 and GOARM if appropriate</span><br><span class="line"># https://github.com/docker-library/golang/issues/184</span><br><span class="line">    apkArch=&quot;$(apk --print-arch)&quot;; \</span><br><span class="line">    case &quot;$apkArch&quot; in \</span><br><span class="line">        armhf) export GOARM=&apos;6&apos; ;; \</span><br><span class="line">        x86) export GO386=&apos;387&apos; ;; \</span><br><span class="line">    esac; \</span><br><span class="line">    \</span><br><span class="line">    wget -O go.tgz &quot;https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz&quot;; \</span><br><span class="line">    # echo &apos;bc1ef02bb1668835db1390a2e478dcbccb5dd16911691af9d75184bbe5aa943e *go.tgz&apos; | sha256sum -c -; \</span><br><span class="line">    tar -C /usr/local -xzf go.tgz; \</span><br><span class="line">    rm go.tgz; \</span><br><span class="line">    \</span><br><span class="line">    cd /usr/local/go/src; \</span><br><span class="line">    ./make.bash; \</span><br><span class="line">    \</span><br><span class="line">    rm -rf \</span><br><span class="line"># https://github.com/golang/go/blob/0b30cf534a03618162d3015c8705dd2231e34703/src/cmd/dist/buildtool.go#L121-L125</span><br><span class="line">        /usr/local/go/pkg/bootstrap \</span><br><span class="line"># https://golang.org/cl/82095</span><br><span class="line"># https://github.com/golang/build/blob/e3fe1605c30f6a3fd136b561569933312ede8782/cmd/release/releaselet.go#L56</span><br><span class="line">        /usr/local/go/pkg/obj \</span><br><span class="line">    ; \</span><br><span class="line">    export PATH=&quot;/usr/local/go/bin:/usr/bin:$PATH&quot;; \</span><br><span class="line">    go version;    \</span><br><span class="line">    git version</span><br><span class="line"># apk del .build-deps</span><br><span class="line">ENV GO15VENDOREXPERIMENT 1</span><br><span class="line">ENV GO111MODULE on</span><br><span class="line">ENV GOROOT /usr/local/go</span><br><span class="line">ENV GOPATH /data/boyosoft/goBillProcess</span><br><span class="line"># ENV DPPATH $GOPATH/src/vendor/github.com/cpfc/dp</span><br><span class="line">ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH</span><br><span class="line"></span><br><span class="line"># ENV GOPATH /go</span><br><span class="line"># ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH</span><br><span class="line"></span><br><span class="line"># RUN mkdir -p &quot;$GOPATH/src&quot; &quot;$GOPATH/bin&quot; &amp;&amp; \</span><br><span class="line">#   chmod -R 777 &quot;$GOPATH&quot;  &amp;&amp;  \</span><br><span class="line">RUN mkdir -p /root/.ssh</span><br><span class="line">COPY authorized_keys /root/.ssh/authorized_keys</span><br><span class="line">COPY id_rsa_github /root/.ssh/id_rsa_github</span><br><span class="line"># COPY id_rsa_bigdata_prod /root/.ssh/id_rsa_bigdata_prod</span><br><span class="line">COPY config /root/.ssh/config</span><br><span class="line">COPY known_hosts /root/.ssh/known_hosts</span><br><span class="line">RUN cd /root/.ssh; \</span><br><span class="line">      chmod 400  *; \</span><br><span class="line">      cd ..;    \</span><br><span class="line">    chmod 700 .ssh;    \</span><br><span class="line">    git config --global user.name &quot;devuser&quot;;    \</span><br><span class="line">    git config --global user.email &quot;pythoner@icloud.com&quot;</span><br><span class="line">#</span><br><span class="line">WORKDIR $GOPATH/src</span><br><span class="line">VOLUME [&quot;/data/boyosoft&quot;]</span><br><span class="line">EXPOSE 8080 8081 3000 3001 9000 9001 9090</span><br></pre></td></tr></table></figure>
+<p>Dockerfile for CentOS+Golang</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line"># Version: 0.0.1</span><br><span class="line">FROM centos:latest</span><br><span class="line">MAINTAINER xiehuanang &quot;xiehuanang@boyosoft.net&quot;</span><br><span class="line"># RUN yum install -y wget</span><br><span class="line">#================================================================</span><br><span class="line"># 创建构建或初始化容器时的若干中文件</span><br><span class="line">RUN mkdir /dockerdata</span><br><span class="line">WORKDIR /dockerdata</span><br><span class="line">ADD go1.12.3.linux-amd64.tar.gz /dockerdata</span><br><span class="line"># 升级到centos-7</span><br><span class="line"># COPY CentOS6-Base-163.repo /dockerdata/CentOS-Base.repo</span><br><span class="line"># COPY geekery.repo /dockerdata/geekery.repo</span><br><span class="line"># RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup &amp;&amp;    \</span><br><span class="line">#         cp /dockerdata/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo    &amp;&amp;    \</span><br><span class="line">#         cp /dockerdata/geekery.repo /etc/yum.repos.d/geekery.repo</span><br><span class="line">RUN yum clean all &amp;&amp;    \</span><br><span class="line">        yum makecache    &amp;&amp;    \</span><br><span class="line">        yum -y update    &amp;&amp;    \</span><br><span class="line">        yum install -y gcc git</span><br><span class="line"># RUN yum install -y curl    &amp;&amp;    \</span><br><span class="line"></span><br><span class="line">#     yum install -y readline-devel    &amp;&amp;    \</span><br><span class="line">#     yum install -y libXt-devel    &amp;&amp;    \</span><br><span class="line">#     yum install -y make</span><br><span class="line"># screen ftp</span><br><span class="line"># RUN yum install -y gcc-gfortran</span><br><span class="line"></span><br><span class="line"># gcc-c++</span><br><span class="line"># RUN yum install -y readline-devel</span><br><span class="line"># RUN yum install -y libXt-devel</span><br><span class="line"># RUN yum install -y make</span><br><span class="line"># git</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line"># RUN yum install -y vixie-cron</span><br><span class="line"># RUN yum install -y crontabs</span><br><span class="line"># RUN chkconfig --level 35 crond on</span><br><span class="line"># RUN yum install -y bzip2recover</span><br><span class="line"># RUN yum install -y bzip2</span><br><span class="line"></span><br><span class="line"># install R packages</span><br><span class="line"># RUN yum install -y epel-release</span><br><span class="line"># RUN yum install -y R</span><br><span class="line">#================================================================</span><br><span class="line"># RUN yum install -y mysql-community-server</span><br><span class="line"># RUN yum install tomcat6 tomcat6-webapps tomcat6-admin-webapps</span><br><span class="line">#================================================================</span><br><span class="line"># RUN yum install -y redis-server</span><br><span class="line"># RUN yum install -y redis-tools</span><br><span class="line">#================================================================RUN eval &quot;TZ=&apos;Asia/Shanghai&apos;; export TZ&quot;</span><br><span class="line">RUN echo &quot;export TZ=\&quot;Asia/Shanghai\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export TS=\&quot;`date -d today +&quot;%-Y%-m%-d%k%M%S&quot;`\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export VERSION=\&quot;`date -d today +&quot;v2.4.0.%-Y%-m%-d%-k%M%S&quot;`\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">#@todo: 争取把跨平台编译的脚本保存在Docker容器中</span><br><span class="line"># RUN echo `for GOOS in windows;do for GOARCH in 386 amd64; do go build -v -ldflags &quot;-s -w -X main._VERSION_=&quot;$VERSION  -o BillProcess-$GOOS-$GOARCH-v$TS.exe; done; done`</span><br><span class="line"></span><br><span class="line"># RUN rm /etc/localtime3</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"># 此处纯粹是为配合腾讯的习惯，腾讯虚拟服务器的工作卷名字叫data</span><br><span class="line"># RUN export http_proxy=&quot;10.251.233.145:8888&quot;</span><br><span class="line"># RUN export https_prxy=&quot;10.251.233.145:8888&quot;</span><br><span class="line">ENV LANG en_US.UTF-8</span><br><span class="line">ENV LC_ALL en_US.UTF-8</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line">RUN echo &quot;47.92.84.245\tboyosoft&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;47.92.84.245\tboyosoft.net&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;47.92.84.245\twww.boyosoft.net&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        touch /dockerdata/update_hosts    &amp;&amp;    \</span><br><span class="line">        echo &quot;cat /dockerdata/ex_hosts &gt;&gt; /etc/hosts&quot; &gt;&gt; /dockerdata/update_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;/etc/init.d/netfs restart&quot; &gt;&gt; /dockerdata/update_hosts    &amp;&amp;  \</span><br><span class="line">        chmod 700 /dockerdata/update_hosts  &amp;&amp;  \</span><br><span class="line">        rm -rf /dockerdata/ex_hosts    &amp;&amp;    \</span><br><span class="line">        rm -rf /usr/lib/golang  &amp;&amp;  \</span><br><span class="line">    cp -rf /dockerdata/go /usr/lib/golang   &amp;&amp;  \</span><br><span class="line">        rm -rf /dockerdata/go  &amp;&amp;  \</span><br><span class="line">    mkdir -p /root/.ssh &amp;&amp;  \</span><br><span class="line">    chmod 700 /root/.ssh</span><br><span class="line"></span><br><span class="line">ENV GO15VENDOREXPERIMENT 1</span><br><span class="line">ENV GO111MODULE on</span><br><span class="line">ENV GOROOT /usr/lib/golang</span><br><span class="line">ENV GOPATH /data/boyosoft/goBillProcess</span><br><span class="line"># ENV DPPATH $GOPATH/src/vendor/github.com/cpfc/dp</span><br><span class="line">ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"># ADD getlatest.sh /dockerdata/getlatest.sh</span><br><span class="line"></span><br><span class="line">RUN mkdir -p /root/.ssh</span><br><span class="line">COPY authorized_keys /root/.ssh/authorized_keys</span><br><span class="line">COPY id_rsa_github /root/.ssh/id_rsa_github</span><br><span class="line"># COPY id_rsa_bigdata_prod /root/.ssh/id_rsa_bigdata_prod</span><br><span class="line">COPY config /root/.ssh/config</span><br><span class="line">COPY known_hosts /root/.ssh/known_hosts</span><br><span class="line">RUN cd /root/.ssh   &amp;&amp;  \</span><br><span class="line">    chmod 400 *    &amp;&amp;  \</span><br><span class="line">    cd ..   &amp;&amp;  \</span><br><span class="line">    chmod 700 .ssh</span><br><span class="line"></span><br><span class="line"># RUN git clone git@git.18.tl:xiehuanang/processtest.git gittest</span><br><span class="line"># RUN git clone http://xiehuanang:Pocketbbs@www.taolch.com:10080/git/goBillProcess.git</span><br><span class="line"></span><br><span class="line"># RUN chmod 700 /dockerdata/getlatest.sh</span><br><span class="line">#RUN echo &quot;#!/bin/sh&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;cd $APPAPIPATH&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;go build -o $APPNAME main.go&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;scp $APPNAME 192.168.200.244:~/$APPNAME&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    chmod 700 /dockerdata/build-$APPNAME.sh</span><br><span class="line"></span><br><span class="line"># RUN echo &quot;#!/bin/sh&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;cd $APPAPIPATH&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;go build -o $APPNAME $APPNAME.go&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;scp $APPNAME 10.104.19.122:~/data/boyosoft/$APPNAME&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         chmod 700 /dockerdata/build-$APPNAME.sh</span><br><span class="line"></span><br><span class="line"># RUN git config --global user.email &quot;xiehuanang@boyosoft.net&quot;</span><br><span class="line"># RUN git config --global user.name &quot;xiehuanang&quot;</span><br><span class="line"># RUN git config --global push.default matching</span><br><span class="line">RUN git config --global user.name &quot;devuser&quot;</span><br><span class="line">RUN git config --global user.email &quot;pythoner@icloud.com&quot;</span><br><span class="line"></span><br><span class="line">###############################################################################</span><br><span class="line"># 初始化root用户的环境变量</span><br><span class="line">RUN echo &quot;export GOPATH=$GOPATH&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GOROOT=$GOROOT&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GO15VENDOREXPERIMENT=$GO15VENDOREXPERIMENT&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GO111MODULE=$GO111MODULE&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export JDALPHASERVERPATH=$GOPATH/src/github.com/boyosoft/jdalphaserver&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export PATH=$PATH&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    cat /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    rm -rf /var/cache/yum</span><br><span class="line"># RUN source /root/.profile</span><br><span class="line"># RUN touch /usr/local/bin/q &amp;&amp;  \</span><br><span class="line">#     chmod +x /usr/local/bin/q  &amp;&amp;  \</span><br><span class="line">#     echo &quot;#!/bin/bash&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;cd $JDALPHASERVERPATH&quot; &gt;&gt; /usr/local/bin/q  &amp;&amp;  \</span><br><span class="line">#     echo &quot;rm -rf jdalphaserver&quot; &gt;&gt; /usr/local/bin/q   &amp;&amp;  \</span><br><span class="line">#     echo &quot;go build&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;chmod +x jdalphaserver&quot; &gt;&gt; /usr/local/bin/q &amp;&amp; \</span><br><span class="line">#     # echo &quot;./jdalphaserver -syncdb&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;./jdalphaserver&quot; &gt;&gt; /usr/local/bin/q</span><br><span class="line">###############################################################################</span><br><span class="line"></span><br><span class="line">#RUN mkdir -p /dockerdata/www/html/static</span><br><span class="line"># RUN git commit -a -m &quot;update when compile the dockerfile&quot;</span><br><span class="line"># RUN git push</span><br><span class="line"># goBillProcess内嵌的Web服务器占用的端口号</span><br><span class="line">WORKDIR $GOPATH/src</span><br><span class="line">VOLUME [&quot;/data/boyosoft&quot;]</span><br><span class="line">EXPOSE 8080 8081 3000 3001 9000 9001 9090</span><br><span class="line"></span><br><span class="line"># export VERSION=`date -d today +&quot;v2.4.0.%-Y%-m%-d%-k%M%S&quot;`</span><br><span class="line"># export TS=`date -d today +&quot;%-Y%-m%-d%k%M%S&quot;`</span><br><span class="line"># for GOOS in windows;do for GOARCH in 386 amd64; do go build -v -ldflags &quot;-s -w -X main._VERSION_=&quot;$VERSION  -o BillProcess-$GOOS-$GOARCH-v$TS.exe; done; done</span><br><span class="line"></span><br><span class="line"># ENTRYPOINT [&quot;/root/config_crond.sh&quot;]</span><br><span class="line"># CMD [&quot;/dockerdata/build-$APPNAME.sh&quot;]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/Dockerfile-for-Alpine+Golang/" data-id="ck33wmxhl00c94mnph0cvbe2k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Alpine/">Alpine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/golang-step-1/0-1-build-golang-win2008" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/03/GolangNotes/golang-step-1/0-1-build-golang-win2008/" class="article-date">
+  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/GolangNotes/golang-step-1/0-1-build-golang-win2008/">使用批处理文件在Windows下打包Golang项目</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在真实项目打包过程中，存在如下需求</p>
+<ol>
+<li>清理现场</li>
+<li>构建时间戳</li>
+<li>编译即<code>go build</code>命令，但是需要一些编译参数，输出可执行文件带时间戳</li>
+<li>压缩</li>
+</ol>
+<p>下文给出了批处理脚本和最佳实践，鼓励选用。</p>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><ol>
+<li><p>修改<code>main.go</code>定义全局变量<code>_VERSION_</code>并在<code>main</code>方法中日志输出版本号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import ( &quot;log&quot; )</span><br><span class="line"></span><br><span class="line">// 如下变量供编译器使用，不适用于golint的修改建议 var _VERSION_ = &quot;unknown&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">log.Printf(&quot;current program version: %s&quot;, _VERSION_)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建议在项目目录下创建 <code>gbuildwin.bat</code> 批处理脚本</p>
+</li>
+<li><p>复制如下内容到 <code>gbuildwin.bat</code> 批处理脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">echo off</span><br><span class="line">echo 编译打包命令如下，产生文件名带时间戳</span><br><span class="line">echo ==========================================</span><br><span class="line">set /a t1=(1%time:~0,2%-100)*1</span><br><span class="line">if %t1% LSS 10 set t1=0%t1%</span><br><span class="line">set ymd_hm=%date:~0,4%%date:~5,2%%date:~8,2%%t1%%time:~3,2%%time:~6,2%</span><br><span class="line">set Version=v2.4.%ymd_hm%&quot;</span><br><span class="line">echo 如果需要请修改GOPATH</span><br><span class="line">@REM set GOPATH=M:\working\goYOURPROGRAM</span><br><span class="line">echo 版本号: %Version%</span><br><span class="line">@echo on</span><br><span class="line">go clean</span><br><span class="line">go generate</span><br><span class="line">go build -o YOURPROGRAM.exe -ldflags &quot;-s -w -X main._VERSION_=%Version%&quot; main.go</span><br><span class="line">set PATH=%PATH%;C:\Program Files\WinRAR;</span><br><span class="line">copy YOURPROGRAM.exe &quot;YOURPROGRAM_v%ymd_hm%.exe&quot;</span><br><span class="line">rar a &quot;YOURPROGRAM_v%ymd_hm%.ra_&quot; &quot;YOURPROGRAM_v%ymd_hm%.exe&quot;</span><br><span class="line">@echo off</span><br><span class="line">echo ==========================================</span><br><span class="line">@echo on</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>批处理文件在<code>Windows XP</code>和<code>Windows 2008</code>下测试通过。</p>
+<p>上述批处理脚本输出如下可执行文件 <code>YOURPROGRAM_v20190103113702.exe</code></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><strong>使用上述批处理脚本时请将<code>YOURPROGRAM</code>替换成您的项目名称</strong></li>
+<li>根据修改设置 <code>GOPATH</code></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/golang-step-1/0-1-build-golang-win2008/" data-id="ck33wmxrt00jb4mnpegvf40al" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-金融街笔记/鑫苑" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/03/金融街笔记/鑫苑/" class="article-date">
+  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/习作/">习作</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/金融街笔记/鑫苑/">鑫苑未来五到十年的三个标志性事件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>金融街笔记20180523</p>
+<ol>
+<li>在京津沪雄核心地段买地盖房子，构建企业<strong>图腾</strong></li>
+<li>入川买地，在西南地区有意识地<strong>规模化囤积土地</strong>，完成全国性的布局</li>
+<li>金融或科技类子公司分拆上市，持有<strong>金融牌照</strong>，拥有一两家有一定话语权的银行或保险公司</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/金融街笔记/鑫苑/" data-id="ck33wmxev00ar4mnpb1i5vjf7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/金融街/">金融街</a></li></ul>
@@ -112,14 +350,14 @@
 
 
   
-    <article id="post-金融街笔记/经叔平" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-GolangNotes/Gin框架介绍" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/01/03/金融街笔记/经叔平/" class="article-date">
+    <a href="/2019/01/03/GolangNotes/Gin框架介绍/" class="article-date">
   <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/习作/">习作</a>
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
   </div>
 
   </div>
@@ -130,7 +368,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/金融街笔记/经叔平/">经叔平</a>
+      <a class="article-title" href="/2019/01/03/GolangNotes/Gin框架介绍/">Gin框架介绍</a>
     </h1>
   
 
@@ -138,244 +376,48 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>金融街笔记20180511</p>
-<p>经叔平，民生银行创始人，曾经担任全国工商联主席。</p>
-<p>年轻太美好了。 年轻的时候遇到大人物，是大人物可以做的事情，我即使做不到也可以模仿。 年龄大了，遇到大人物，是大人物可以做到的事情，我压根做不到，只是想到立即臣服归顺获得一份工作。</p>
-<p>鼓励趁年轻的时候多出去转转，增广见闻，遇到一个可以模仿的大人物。</p>
-<p>经叔平老爷子，点亮了我的人生，让我的人生变得有意义。以前不知道该做什么，不敢想，也不知道往哪儿想。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/金融街笔记/经叔平/" data-id="ck33wf1go007420npsiz2ry5z" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/金融街/">金融街</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-金融街笔记/隐忍阻碍了组织进化" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/03/金融街笔记/隐忍阻碍了组织进化/" class="article-date">
-  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/习作/">习作</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/金融街笔记/隐忍阻碍了组织进化/">隐忍阻碍了组织进化</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>分享一段 少时读书看到各种隐忍的典范，进入职场后经常扮演隐忍的角色。</p>
-<p>但是年届不惑后，反省长期坚持隐忍实际上阻碍了组织进化，因为你没有和组织进行充分的磨合。</p>
-<p>这段话不是反对隐忍，而是认识到隐忍对组织不利的一面。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/金融街笔记/隐忍阻碍了组织进化/" data-id="ck33wf1gn007220npk1dqkdfh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/金融街/">金融街</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-金融街笔记/陈春花的故事" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/03/金融街笔记/陈春花的故事/" class="article-date">
-  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/习作/">习作</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/金融街笔记/陈春花的故事/">陈春花的故事</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>金融街笔记20180611</p>
-<p>一四年冬天拜访一家八线城市郊区的冷库。</p>
-<p>冷库的老板告诉我刚刚被新希望收购，考虑我可能不知道新希望，告诉我一家做饲料的公司。</p>
-<p>我知道新希望，也知道陈到这家公司做客卿。</p>
-<p>这家冷库从表面上看地处八线城市郊区，老板水平冷库面积，都没什么可圈可点之处。</p>
-<p>但是仔细琢磨冷库这个案例，</p>
-<ol>
-<li>地处三省交界，发达的公路网络可以冷链触达周边五省（冷链有距离限制）</li>
-<li>老板做事情精致有追求皮鞋干净办公室整洁，苹果一体机</li>
-<li>老板积极拥抱变化尝试粗糙的供应链金融</li>
-<li>老板节制，老板回民经营冷库只接纳民族习惯认可的肉类，这需要多大的勇气。</li>
-</ol>
-<p>自此对陈春花刮目相看。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/金融街笔记/陈春花的故事/" data-id="ck33wf1gl006y20np7h7m9hka" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/金融街/">金融街</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-行走的铅笔/Python知识图谱" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/03/行走的铅笔/Python知识图谱/" class="article-date">
-  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/行走的铅笔/Python知识图谱/">Python知识图谱</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://upload-images.jianshu.io/upload_images/2359750-c8b27905458670b9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Python从初级到高级.jpg"></p>
-<p>从<code>Python 2.3</code>开始使用至今，整理历年经验所得，知识图谱，希望有助于学习<code>Python</code>的同学。</p>
-<p>写了二十万行左右的Python代码，是Python让我得以在帝都安身立命。</p>
-<h1 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h1><p>当时选择Python引入到项目团队中来，考察了当时可以接触到的几乎所有的编程语言，比如C, C++, Java, Perl, PHP, Delphi, Pascal, 甚至研究能不能使用 <code>Masm</code> 写出来一套满足项目需要的基础框架出来。</p>
-<p>项目需要大量的数据处理，需要应对高频的新需求，需要跨平台迁移到不同的Linux或AIX上面运行。</p>
-<p>提出了著名的3C原则， C Complete，能不能覆盖绝大部分的问题域， C Cost，成本，既包含开发成本也包括运维成本，也包含迭代成本，C Change，快速应对变化。</p>
-<p>基于上述3C原则，特别最后一个C，我决定选择了<code>Python</code>。</p>
-<p>选择<code>Python</code>的其他原因</p>
-<ol>
-<li>Google把Python作为公司层面的第三门编程语言，和C、Java并列（大厂背书）</li>
-<li>当时非常流行的<code>BitTorrent</code>下载软件使用Python开发（成功实践）</li>
-<li>可以参考<code>BitTorrent</code>源代码（可以学习）</li>
-</ol>
-<h1 id="知识来源"><a href="#知识来源" class="headerlink" title="知识来源"></a>知识来源</h1><p>日后的开发经历中，的确多多从<code>BitTorrent</code>源代码中受益。当时可以学习的资料非常用有限，中文资料稀缺到几乎可以说没有。</p>
-<p>当时三个知识来源</p>
-<ol>
-<li>Python官方，教父写的早期文档和各种PEP</li>
-<li>Google</li>
-<li><code>BitTorrent</code>源代码</li>
-</ol>
-<h1 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h1><p>第一个版本开发出来，部署上线，即取得非常惊艳的效果，效率比其他语言开发的史前版本高出1个数量级，功能和处理逻辑复杂于史前版本，但是效率依旧高出一个数量级。</p>
-<p>第二年开始重构，这个时候我已经非常熟悉Python的语言特性，也观摩过若干个知名开源项目的源代码。<strong>在重构中引入单元测试。</strong></p>
-<p>这段学习让我总结出来的方法论如下</p>
-<ol>
-<li>选择合适的工具可以大幅度降低研发成本和确保交付品质</li>
-<li>识别不同的知识来源，善用之</li>
-<li>选择恰当的重构或优化时间点，避免早期重构和过度优化</li>
-</ol>
-<h1 id="获奖感言"><a href="#获奖感言" class="headerlink" title="获奖感言"></a>获奖感言</h1><p>BTW</p>
-<ol>
-<li>感谢Python 之父 Guido van Rossum</li>
-<li>把单元测试技术介绍给我的哥们，名字叫黄冬，后来担任优酷土豆的CTO。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/行走的铅笔/Python知识图谱/" data-id="ck33wf1i300bb20nplsg0tyct" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/知识图谱/">知识图谱</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-金融街笔记/牌照经济学" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/03/金融街笔记/牌照经济学/" class="article-date">
-  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/习作/">习作</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/金融街笔记/牌照经济学/">牌照经济学</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>金融街笔记20180524</p>
-<p>最重要的事情</p>
+        <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ol>
+<li><p>确认本地环境的<code>$GOPATH</code></p>
 <ul>
-<li>牌照经济学</li>
-<li>牌照经济学</li>
-<li>牌照经济学</li>
+<li><code>Windows</code> 下使用 <code>echo %GOPATH%</code></li>
+<li><code>Linux</code> 下使用<code>echo $GOPATH</code></li>
 </ul>
-<p>下面还有三万句废话，我懒得敲出来。套用曾经混BBS的一句套话，本文正文<strong>如题</strong>，其他都是废话。</p>
+</li>
+<li><p>获取远程包 <code>go get github.com/gin-gonic/gin</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//升级安装请增加参数 -u</span><br><span class="line">go get -u github.com/gin-gonic/gin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输入<code>go version</code>确认本地环境的<code>Golang</code>版本</p>
+</li>
+</ol>
+<h1 id="第一个案例程序"><a href="#第一个案例程序" class="headerlink" title="第一个案例程序"></a>第一个案例程序</h1><ol>
+<li>在您的<code>$GOPATH</code>目录下创建子文件夹 <code>$GOPATH/src/gin-first</code></li>
+<li>切换到上述子文件夹下创建 <code>main.go</code></li>
+<li>复制如下内容到<code>main.go</code></li>
+</ol>
+<h2 id="First"><a href="#First" class="headerlink" title="First"></a>First</h2><ol>
+<li>创建如下文件夹 <code>$GOPATH/src/gin-first</code></li>
+<li>在上述文件夹下创建<code>main.go</code></li>
+<li>复制下面的内容到<code>main.go</code></li>
+<li>在命令行窗口中运行 <code>go run main.go</code></li>
+<li>在浏览器中打开 <code>http://127.0.0.1:8080/ping</code>可以看到返回内容<code>pong</code></li>
+</ol>
+<p>如果您使用<code>macOS</code>或<code>Linux</code>，您也可以在<code>Shell</code>窗口中输入如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:8080/ping</span><br></pre></td></tr></table></figure>
+<p>看到返回 <code>pong</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;github.com/gin-gonic/gin&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    r := gin.Default()</span><br><span class="line">    r.GET(&quot;/ping&quot;, func(c *gin.Context) &#123;</span><br><span class="line">        c.JSON(200, gin.H&#123;</span><br><span class="line">            &quot;message&quot;: &quot;pong&quot;,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    r.Run() // listen and serve on 0.0.0.0:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><ol>
+<li>上述子文件夹下运行 <code>go run main.go</code></li>
+<li>将看到输出内容 <code>[GIN-debug] Listening and serving HTTP on :8080</code></li>
+<li>打开浏览器访问 <code>http://127.0.0.1:8080/ping</code> 可以看到返回<code>pong</code></li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/金融街笔记/牌照经济学/" data-id="ck33wf1gk006v20np0qx2ekqu" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/Gin框架介绍/" data-id="ck33wmx4s000y4mnpwj85cxak" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/金融街/">金融街</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gin/">Gin</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
 
     </footer>
   </div>
@@ -384,14 +426,14 @@
 
 
   
-    <article id="post-金融街笔记/招商银行" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-GolangNotes/dockerfile-golang-alpine" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/01/03/金融街笔记/招商银行/" class="article-date">
+    <a href="/2019/01/03/GolangNotes/dockerfile-golang-alpine/" class="article-date">
   <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/习作/">习作</a>
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
   </div>
 
   </div>
@@ -402,7 +444,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/金融街笔记/招商银行/">招商银行</a>
+      <a class="article-title" href="/2019/01/03/GolangNotes/dockerfile-golang-alpine/">Dockerfile for Alpine+Golang</a>
     </h1>
   
 
@@ -410,20 +452,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>金融街笔记20180510</p>
-<p>晚上回到家，猛然想起来和招商银行同行，竟然有18年。</p>
-<p>当初我发现招商银行的几个特征①真皮沙发 ②薄荷糖或大白兔 ③千平米营业网点</p>
-<p>后来陆续发现招商银行的一些特征，家庭内转账免费收纳在校大学生和家长，客户分级，引导客户去证券开户。</p>
-<p>后来发现一条原则 适度领先，确保第一。</p>
-<p>18年的坚持，真心不容易。</p>
+        <p>在开发环境，测试环境下使用 <code>Golang</code> 的 <code>Docker</code> 镜像。 目前使用两个<code>Dockerfile</code>，一个基于<code>Alpine</code>，一个基于<code>CentOS</code>。</p>
+<p>使用时请注意修改掉私人有关的内容,</p>
+<ul>
+<li>比如依赖的私人文件，您在<code>docker build</code>时找不到</li>
+<li>私人的<code>Github</code>授权文件</li>
+</ul>
+<p>在<code>Dockerfile</code>中完成如下几类动作</p>
+<ol>
+<li>下载或更新到最新版本的的Golang，目前版本式<code>1.12.3</code></li>
+<li>设置时区到<strong>东八区</strong></li>
+<li>设置Golang所依赖的环境变量比如 <code>GO15VENDOREXPERIMENT</code> <code>GO111MODULE</code> <code>GOROOT</code> <code>GOPATH</code></li>
+<li>配置访问<code>Github</code>的<code>ssh</code></li>
+<li>设置工作目录 <code>WORKDIR $GOPATH/src</code></li>
+<li>声明<code>VOLUME [&quot;/data/yourcorp&quot;]</code></li>
+<li>声明开放端口<code>EXPOSE</code></li>
+</ol>
+<h1 id="Dockerfile-for-Alpine-Golang"><a href="#Dockerfile-for-Alpine-Golang" class="headerlink" title="Dockerfile for Alpine+Golang"></a>Dockerfile for Alpine+Golang</h1><p>特别注意本<code>Dockerfile</code>中直接从<code>Golang</code>官网下载最新版本，某些地区可能需要科学上网。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">FROM alpine:latest</span><br><span class="line"></span><br><span class="line">RUN apk add --no-cache \</span><br><span class="line">        ca-certificates</span><br><span class="line"></span><br><span class="line"># RUN echo &apos;http://mirrors.ustc.edu.cn/alpine/v3.5/main&apos; &gt; /etc/apk/repositories \</span><br><span class="line">    # &amp;&amp; echo &apos;http://mirrors.ustc.edu.cn/alpine/v3.5/community&apos; &gt;&gt;/etc/apk/repositories \</span><br><span class="line">RUN apk update    \</span><br><span class="line">    &amp;&amp; apk add tzdata \</span><br><span class="line">    &amp;&amp; ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \</span><br><span class="line">    &amp;&amp; echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone</span><br><span class="line"># set up nsswitch.conf for Go&apos;s &quot;netgo&quot; implementation</span><br><span class="line"># - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275</span><br><span class="line"># - Docker run --rm debian:stretch grep &apos;^hosts:&apos; /etc/nsswitch.conf</span><br><span class="line">RUN [ ! -e /etc/nsswitch.conf ] &amp;&amp; echo &apos;hosts: files dns&apos; &gt; /etc/nsswitch.conf</span><br><span class="line"></span><br><span class="line">ENV GOLANG_VERSION 1.12.3</span><br><span class="line"></span><br><span class="line">RUN set -eux; \</span><br><span class="line">    apk add --no-cache --virtual .build-deps bash gcc musl-dev openssl gcc musl-dev go git\</span><br><span class="line">    ; \</span><br><span class="line">    export \</span><br><span class="line"># set GOROOT_BOOTSTRAP such that we can actually build Go</span><br><span class="line">        GOROOT_BOOTSTRAP=&quot;$(go env GOROOT)&quot; \</span><br><span class="line"># ... and set &quot;cross-building&quot; related vars to the installed system&apos;s values so that we create a build targeting the proper arch</span><br><span class="line"># (for example, if our build host is GOARCH=amd64, but our build env/image is GOARCH=386, our build needs GOARCH=386)</span><br><span class="line">        GOOS=&quot;$(go env GOOS)&quot; \</span><br><span class="line">        GOARCH=&quot;$(go env GOARCH)&quot; \</span><br><span class="line">        GOHOSTOS=&quot;$(go env GOHOSTOS)&quot; \</span><br><span class="line">        GOHOSTARCH=&quot;$(go env GOHOSTARCH)&quot; \</span><br><span class="line">    ; \</span><br><span class="line"># also explicitly set GO386 and GOARM if appropriate</span><br><span class="line"># https://github.com/docker-library/golang/issues/184</span><br><span class="line">    apkArch=&quot;$(apk --print-arch)&quot;; \</span><br><span class="line">    case &quot;$apkArch&quot; in \</span><br><span class="line">        armhf) export GOARM=&apos;6&apos; ;; \</span><br><span class="line">        x86) export GO386=&apos;387&apos; ;; \</span><br><span class="line">    esac; \</span><br><span class="line">    \</span><br><span class="line">    wget -O go.tgz &quot;https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz&quot;; \</span><br><span class="line">    # echo &apos;bc1ef02bb1668835db1390a2e478dcbccb5dd16911691af9d75184bbe5aa943e *go.tgz&apos; | sha256sum -c -; \</span><br><span class="line">    tar -C /usr/local -xzf go.tgz; \</span><br><span class="line">    rm go.tgz; \</span><br><span class="line">    \</span><br><span class="line">    cd /usr/local/go/src; \</span><br><span class="line">    ./make.bash; \</span><br><span class="line">    \</span><br><span class="line">    rm -rf \</span><br><span class="line"># https://github.com/golang/go/blob/0b30cf534a03618162d3015c8705dd2231e34703/src/cmd/dist/buildtool.go#L121-L125</span><br><span class="line">        /usr/local/go/pkg/bootstrap \</span><br><span class="line"># https://golang.org/cl/82095</span><br><span class="line"># https://github.com/golang/build/blob/e3fe1605c30f6a3fd136b561569933312ede8782/cmd/release/releaselet.go#L56</span><br><span class="line">        /usr/local/go/pkg/obj \</span><br><span class="line">    ; \</span><br><span class="line">    export PATH=&quot;/usr/local/go/bin:/usr/bin:$PATH&quot;; \</span><br><span class="line">    go version;    \</span><br><span class="line">    git version</span><br><span class="line"># apk del .build-deps</span><br><span class="line">ENV GO15VENDOREXPERIMENT 1</span><br><span class="line">ENV GO111MODULE on</span><br><span class="line">ENV GOROOT /usr/local/go</span><br><span class="line">ENV GOPATH /data/boyosoft/goBillProcess</span><br><span class="line"># ENV DPPATH $GOPATH/src/vendor/github.com/cpfc/dp</span><br><span class="line">ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH</span><br><span class="line"></span><br><span class="line"># ENV GOPATH /go</span><br><span class="line"># ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH</span><br><span class="line"></span><br><span class="line"># RUN mkdir -p &quot;$GOPATH/src&quot; &quot;$GOPATH/bin&quot; &amp;&amp; \</span><br><span class="line">#   chmod -R 777 &quot;$GOPATH&quot;  &amp;&amp;  \</span><br><span class="line">RUN mkdir -p /root/.ssh</span><br><span class="line">COPY authorized_keys /root/.ssh/authorized_keys</span><br><span class="line">COPY id_rsa_github /root/.ssh/id_rsa_github</span><br><span class="line"># COPY id_rsa_bigdata_prod /root/.ssh/id_rsa_bigdata_prod</span><br><span class="line">COPY config /root/.ssh/config</span><br><span class="line">COPY known_hosts /root/.ssh/known_hosts</span><br><span class="line">RUN cd /root/.ssh; \</span><br><span class="line">      chmod 400  *; \</span><br><span class="line">      cd ..;    \</span><br><span class="line">    chmod 700 .ssh;    \</span><br><span class="line">    git config --global user.name &quot;devuser&quot;;    \</span><br><span class="line">    git config --global user.email &quot;pythoner@icloud.com&quot;</span><br><span class="line">#</span><br><span class="line">WORKDIR $GOPATH/src</span><br><span class="line">VOLUME [&quot;/data/yourcorp&quot;]</span><br><span class="line">EXPOSE 8080 8081 3000 3001 9000 9001 9090</span><br></pre></td></tr></table></figure>
+<h1 id="Dockerfile-for-CentOS-Golang"><a href="#Dockerfile-for-CentOS-Golang" class="headerlink" title="Dockerfile for CentOS+Golang"></a>Dockerfile for CentOS+Golang</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line"># Version: 0.0.1</span><br><span class="line">FROM centos:latest</span><br><span class="line">MAINTAINER devuser &quot;devuser@yourcorp.net&quot;</span><br><span class="line"># RUN yum install -y wget</span><br><span class="line">#================================================================</span><br><span class="line"># 创建构建或初始化容器时的若干中文件</span><br><span class="line">RUN mkdir /dockerdata</span><br><span class="line">WORKDIR /dockerdata</span><br><span class="line">ADD go1.12.3.linux-amd64.tar.gz /dockerdata</span><br><span class="line"># 升级到centos-7</span><br><span class="line"># COPY CentOS6-Base-163.repo /dockerdata/CentOS-Base.repo</span><br><span class="line"># COPY geekery.repo /dockerdata/geekery.repo</span><br><span class="line"># RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup &amp;&amp;    \</span><br><span class="line">#         cp /dockerdata/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo    &amp;&amp;    \</span><br><span class="line">#         cp /dockerdata/geekery.repo /etc/yum.repos.d/geekery.repo</span><br><span class="line">RUN yum clean all &amp;&amp;    \</span><br><span class="line">        yum makecache    &amp;&amp;    \</span><br><span class="line">        yum -y update    &amp;&amp;    \</span><br><span class="line">        yum install -y gcc git</span><br><span class="line"># RUN yum install -y curl    &amp;&amp;    \</span><br><span class="line"></span><br><span class="line">#     yum install -y readline-devel    &amp;&amp;    \</span><br><span class="line">#     yum install -y libXt-devel    &amp;&amp;    \</span><br><span class="line">#     yum install -y make</span><br><span class="line"># screen ftp</span><br><span class="line"># RUN yum install -y gcc-gfortran</span><br><span class="line"></span><br><span class="line"># gcc-c++</span><br><span class="line"># RUN yum install -y readline-devel</span><br><span class="line"># RUN yum install -y libXt-devel</span><br><span class="line"># RUN yum install -y make</span><br><span class="line"># git</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line"># RUN yum install -y vixie-cron</span><br><span class="line"># RUN yum install -y crontabs</span><br><span class="line"># RUN chkconfig --level 35 crond on</span><br><span class="line"># RUN yum install -y bzip2recover</span><br><span class="line"># RUN yum install -y bzip2</span><br><span class="line"></span><br><span class="line"># install R packages</span><br><span class="line"># RUN yum install -y epel-release</span><br><span class="line"># RUN yum install -y R</span><br><span class="line">#================================================================</span><br><span class="line"># RUN yum install -y mysql-community-server</span><br><span class="line"># RUN yum install tomcat6 tomcat6-webapps tomcat6-admin-webapps</span><br><span class="line">#================================================================</span><br><span class="line"># RUN yum install -y redis-server</span><br><span class="line"># RUN yum install -y redis-tools</span><br><span class="line">#================================================================RUN eval &quot;TZ=&apos;Asia/Shanghai&apos;; export TZ&quot;</span><br><span class="line">RUN echo &quot;export TZ=\&quot;Asia/Shanghai\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export TS=\&quot;`date -d today +&quot;%-Y%-m%-d%k%M%S&quot;`\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export VERSION=\&quot;`date -d today +&quot;v2.4.0.%-Y%-m%-d%-k%M%S&quot;`\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">#@todo: 争取把跨平台编译的脚本保存在Docker容器中</span><br><span class="line"># RUN echo `for GOOS in windows;do for GOARCH in 386 amd64; do go build -v -ldflags &quot;-s -w -X main._VERSION_=&quot;$VERSION  -o BillProcess-$GOOS-$GOARCH-v$TS.exe; done; done`</span><br><span class="line"></span><br><span class="line"># RUN rm /etc/localtime3</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"># 此处纯粹是为配合腾讯的习惯，腾讯虚拟服务器的工作卷名字叫data</span><br><span class="line"># RUN export http_proxy=&quot;10.251.233.145:8888&quot;</span><br><span class="line"># RUN export https_prxy=&quot;10.251.233.145:8888&quot;</span><br><span class="line">ENV LANG en_US.UTF-8</span><br><span class="line">ENV LC_ALL en_US.UTF-8</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line">RUN echo &quot;47.92.84.245\tyourcorp&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;47.92.84.245\tyourcorp.net&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;47.92.84.245\twww.yourcorp.net&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        touch /dockerdata/update_hosts    &amp;&amp;    \</span><br><span class="line">        echo &quot;cat /dockerdata/ex_hosts &gt;&gt; /etc/hosts&quot; &gt;&gt; /dockerdata/update_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;/etc/init.d/netfs restart&quot; &gt;&gt; /dockerdata/update_hosts    &amp;&amp;  \</span><br><span class="line">        chmod 700 /dockerdata/update_hosts  &amp;&amp;  \</span><br><span class="line">        rm -rf /dockerdata/ex_hosts    &amp;&amp;    \</span><br><span class="line">        rm -rf /usr/lib/golang  &amp;&amp;  \</span><br><span class="line">    cp -rf /dockerdata/go /usr/lib/golang   &amp;&amp;  \</span><br><span class="line">        rm -rf /dockerdata/go  &amp;&amp;  \</span><br><span class="line">    mkdir -p /root/.ssh &amp;&amp;  \</span><br><span class="line">    chmod 700 /root/.ssh</span><br><span class="line"></span><br><span class="line">ENV GO15VENDOREXPERIMENT 1</span><br><span class="line">ENV GO111MODULE on</span><br><span class="line">ENV GOROOT /usr/lib/golang</span><br><span class="line">ENV GOPATH /data/yourcorp/goBillProcess</span><br><span class="line"># ENV DPPATH $GOPATH/src/vendor/github.com/cpfc/dp</span><br><span class="line">ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"># ADD getlatest.sh /dockerdata/getlatest.sh</span><br><span class="line"></span><br><span class="line">RUN mkdir -p /root/.ssh</span><br><span class="line">COPY authorized_keys /root/.ssh/authorized_keys</span><br><span class="line">COPY id_rsa_github /root/.ssh/id_rsa_github</span><br><span class="line"># COPY id_rsa_bigdata_prod /root/.ssh/id_rsa_bigdata_prod</span><br><span class="line">COPY config /root/.ssh/config</span><br><span class="line">COPY known_hosts /root/.ssh/known_hosts</span><br><span class="line">RUN cd /root/.ssh   &amp;&amp;  \</span><br><span class="line">    chmod 400 *    &amp;&amp;  \</span><br><span class="line">    cd ..   &amp;&amp;  \</span><br><span class="line">    chmod 700 .ssh</span><br><span class="line"></span><br><span class="line"># RUN git clone git@git.18.tl:devuser/processtest.git gittest</span><br><span class="line"># RUN git clone http://devuser:Pocketbbs@www.taolch.com:10080/git/goBillProcess.git</span><br><span class="line"></span><br><span class="line"># RUN chmod 700 /dockerdata/getlatest.sh</span><br><span class="line">#RUN echo &quot;#!/bin/sh&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;cd $APPAPIPATH&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;go build -o $APPNAME main.go&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;scp $APPNAME 192.168.200.244:~/$APPNAME&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    chmod 700 /dockerdata/build-$APPNAME.sh</span><br><span class="line"></span><br><span class="line"># RUN echo &quot;#!/bin/sh&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;cd $APPAPIPATH&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;go build -o $APPNAME $APPNAME.go&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;scp $APPNAME 10.104.19.122:~/data/yourcorp/$APPNAME&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         chmod 700 /dockerdata/build-$APPNAME.sh</span><br><span class="line"></span><br><span class="line"># RUN git config --global user.email &quot;devuser@yourcorp.net&quot;</span><br><span class="line"># RUN git config --global user.name &quot;devuser&quot;</span><br><span class="line"># RUN git config --global push.default matching</span><br><span class="line">RUN git config --global user.name &quot;devuser&quot;</span><br><span class="line">RUN git config --global user.email &quot;pythoner@icloud.com&quot;</span><br><span class="line"></span><br><span class="line">###############################################################################</span><br><span class="line"># 初始化root用户的环境变量</span><br><span class="line">RUN echo &quot;export GOPATH=$GOPATH&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GOROOT=$GOROOT&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GO15VENDOREXPERIMENT=$GO15VENDOREXPERIMENT&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GO111MODULE=$GO111MODULE&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export JDALPHASERVERPATH=$GOPATH/src/github.com/yourcorp/jdalphaserver&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export PATH=$PATH&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    cat /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    rm -rf /var/cache/yum</span><br><span class="line"># RUN source /root/.profile</span><br><span class="line"># RUN touch /usr/local/bin/q &amp;&amp;  \</span><br><span class="line">#     chmod +x /usr/local/bin/q  &amp;&amp;  \</span><br><span class="line">#     echo &quot;#!/bin/bash&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;cd $JDALPHASERVERPATH&quot; &gt;&gt; /usr/local/bin/q  &amp;&amp;  \</span><br><span class="line">#     echo &quot;rm -rf jdalphaserver&quot; &gt;&gt; /usr/local/bin/q   &amp;&amp;  \</span><br><span class="line">#     echo &quot;go build&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;chmod +x jdalphaserver&quot; &gt;&gt; /usr/local/bin/q &amp;&amp; \</span><br><span class="line">#     # echo &quot;./jdalphaserver -syncdb&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;./jdalphaserver&quot; &gt;&gt; /usr/local/bin/q</span><br><span class="line">###############################################################################</span><br><span class="line"></span><br><span class="line">#RUN mkdir -p /dockerdata/www/html/static</span><br><span class="line"># RUN git commit -a -m &quot;update when compile the dockerfile&quot;</span><br><span class="line"># RUN git push</span><br><span class="line"># goBillProcess内嵌的Web服务器占用的端口号</span><br><span class="line">WORKDIR $GOPATH/src</span><br><span class="line">VOLUME [&quot;/data/yourcorp&quot;]</span><br><span class="line">EXPOSE 8080 8081 3000 3001 9000 9001 9090</span><br><span class="line"></span><br><span class="line"># export VERSION=`date -d today +&quot;v2.4.0.%-Y%-m%-d%-k%M%S&quot;`</span><br><span class="line"># export TS=`date -d today +&quot;%-Y%-m%-d%k%M%S&quot;`</span><br><span class="line"># for GOOS in windows;do for GOARCH in 386 amd64; do go build -v -ldflags &quot;-s -w -X main._VERSION_=&quot;$VERSION  -o BillProcess-$GOOS-$GOARCH-v$TS.exe; done; done</span><br><span class="line"></span><br><span class="line"># ENTRYPOINT [&quot;/root/config_crond.sh&quot;]</span><br><span class="line"># CMD [&quot;/dockerdata/build-$APPNAME.sh&quot;]</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/金融街笔记/招商银行/" data-id="ck33wf1gi006q20np0rxywhmc" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/dockerfile-golang-alpine/" data-id="ck33wmxho00ca4mnpwk7nzk78" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/房地产/">房地产</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/招商银行/">招商银行</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Alpine/">Alpine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
 
     </footer>
   </div>
@@ -432,9 +487,9 @@
 
 
   
-    <article id="post-行走的铅笔/小程序审核的经验" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-行走的铅笔/平安三怼" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/11/25/行走的铅笔/小程序审核的经验/" class="article-date">
+    <a href="/2018/11/25/行走的铅笔/平安三怼/" class="article-date">
   <time datetime="2018-11-25T10:03:37.000Z" itemprop="datePublished">2018-11-25</time>
 </a>
     
@@ -450,7 +505,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/行走的铅笔/小程序审核的经验/">微信小程序审核经验</a>
+      <a class="article-title" href="/2018/11/25/行走的铅笔/平安三怼/">平安三怼</a>
     </h1>
   
 
@@ -458,18 +513,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>BTW，最近使用京东 <em>Taro</em>完成小程序的开发，并且通过腾讯的审核。</p>
-<p>各位如果在执行过程中，萌发放弃的念头，不要苛责自己，有放弃的念头是正常的，但是扭头还是继续做下去。 关于审核提供几条经验（并非我做得好）</p>
-<p>① 不要留下那些并未启用的页面或页面元素，腾讯哥会探测</p>
-<p>② 在代码中删除所有未真正使用的服务端接口 比如 /xxx/unused，腾讯哥会去探测你的服务端接口</p>
-<p>③ 如果你的服务端的确会出错的话，还是给予带有错误码的JSON返回</p>
-<p>④ 在服务端处理的时候，特别警惕传入参数类型，比如你要求整数，腾讯哥探测的时候，他不知道你是整数</p>
-<p>⑤文笔对题，上下文一致，卖猪肉的就不要说养猪，养猪的不要谈兽医，不要扩大自己的业务范围，尽量压缩，至少于我们对标题的直观判断一致。审核特别害怕你扩大自己的业务范围</p>
+        <p>分享这些年因公去平安大厦的三件事情，值得分享。</p>
+<p>第一次去我搜罗了摆在架子上所有的产品彩页，各种花花绿绿的图册。（外部视角）</p>
+<p>第二次去特别关注了股东八卦，组织八卦，其它八卦。有一条八卦至今让我受益匪浅。（内部视角）</p>
+<p>第三次去聊了三个没有答案只能怼的问题，签字画押。当时我被怼的非常尴尬，脸色发白，天热，汗。既然是怼，当然我说不出来什么。能够提出来这三个生怼的问题，我的心思暴露无遗，可惜对方漠视了。（我的视角）</p>
+<p>以后沟通的时候，如果你生怼对方，或者对方生怼你，那么一定要重新思考一下怼的问题。</p>
+<p>世上从来就没有没来由的生怼。</p>
+<p>……</p>
+<p>十二个月后，我梦想成真。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2359750-cbf99dc8856fa86a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片发自简书App"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/25/行走的铅笔/小程序审核的经验/" data-id="ck33wf1jf00f720nppcsevabh" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/25/行走的铅笔/平安三怼/" data-id="ck33wmxme00ft4mnp8ch6bs0y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Taro/">Taro</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微信/">微信</a></li></ul>
@@ -525,7 +582,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/25/taro/taro-index/" data-id="ck33wf1fw004x20npe6386doy" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/25/taro/taro-index/" data-id="ck33wmx8800474mnpk296bx5d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -535,9 +592,9 @@
 
 
   
-    <article id="post-行走的铅笔/平安三怼" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-行走的铅笔/小程序审核的经验" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/11/25/行走的铅笔/平安三怼/" class="article-date">
+    <a href="/2018/11/25/行走的铅笔/小程序审核的经验/" class="article-date">
   <time datetime="2018-11-25T10:03:37.000Z" itemprop="datePublished">2018-11-25</time>
 </a>
     
@@ -553,7 +610,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/行走的铅笔/平安三怼/">平安三怼</a>
+      <a class="article-title" href="/2018/11/25/行走的铅笔/小程序审核的经验/">微信小程序审核经验</a>
     </h1>
   
 
@@ -561,20 +618,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>分享这些年因公去平安大厦的三件事情，值得分享。</p>
-<p>第一次去我搜罗了摆在架子上所有的产品彩页，各种花花绿绿的图册。（外部视角）</p>
-<p>第二次去特别关注了股东八卦，组织八卦，其它八卦。有一条八卦至今让我受益匪浅。（内部视角）</p>
-<p>第三次去聊了三个没有答案只能怼的问题，签字画押。当时我被怼的非常尴尬，脸色发白，天热，汗。既然是怼，当然我说不出来什么。能够提出来这三个生怼的问题，我的心思暴露无遗，可惜对方漠视了。（我的视角）</p>
-<p>以后沟通的时候，如果你生怼对方，或者对方生怼你，那么一定要重新思考一下怼的问题。</p>
-<p>世上从来就没有没来由的生怼。</p>
-<p>……</p>
-<p>十二个月后，我梦想成真。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2359750-cbf99dc8856fa86a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片发自简书App"></p>
+        <p>BTW，最近使用京东 <em>Taro</em>完成小程序的开发，并且通过腾讯的审核。</p>
+<p>各位如果在执行过程中，萌发放弃的念头，不要苛责自己，有放弃的念头是正常的，但是扭头还是继续做下去。 关于审核提供几条经验（并非我做得好）</p>
+<p>① 不要留下那些并未启用的页面或页面元素，腾讯哥会探测</p>
+<p>② 在代码中删除所有未真正使用的服务端接口 比如 /xxx/unused，腾讯哥会去探测你的服务端接口</p>
+<p>③ 如果你的服务端的确会出错的话，还是给予带有错误码的JSON返回</p>
+<p>④ 在服务端处理的时候，特别警惕传入参数类型，比如你要求整数，腾讯哥探测的时候，他不知道你是整数</p>
+<p>⑤文笔对题，上下文一致，卖猪肉的就不要说养猪，养猪的不要谈兽医，不要扩大自己的业务范围，尽量压缩，至少于我们对标题的直观判断一致。审核特别害怕你扩大自己的业务范围</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/25/行走的铅笔/平安三怼/" data-id="ck33wf1jp00ft20npw3hwmihd" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/25/行走的铅笔/小程序审核的经验/" data-id="ck33wmxm900fq4mnpeo78aj9h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Taro/">Taro</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微信/">微信</a></li></ul>
@@ -643,11 +698,7 @@
       <ul>
         
           <li>
-            <a href="/2019/11/18/行走的铅笔/奥森公园/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+            <a href="/2019/11/18/README/">(no title)</a>
           </li>
         
           <li>
@@ -655,11 +706,15 @@
           </li>
         
           <li>
-            <a href="/2019/11/18/README/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/AppID/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2019/11/18/todo/00-03-配置服务器Apache+SSL/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/GolangNotes/todo/common/">(no title)</a>
           </li>
         
       </ul>

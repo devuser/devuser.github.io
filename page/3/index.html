@@ -66,35 +66,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-GolangNotes/todo/AppID" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/GolangNotes/todo/AppID/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h1><ul>
-<li>AppID: <em>wxdccc3a094de0e910</em></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/AppID/" data-id="ck33wf1li00k020npe2feagcb" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-GolangNotes/todo/backers" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/18/GolangNotes/todo/backers/" class="article-date">
@@ -111,7 +82,66 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/backers/" data-id="ck33wf1l700j420npiopme3ti" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/backers/" data-id="ck33wmxrs00ja4mnpwcmj0t86" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/1-1-开始第一个程序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/GolangNotes/1-1-开始第一个程序/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>打开<code>Shell</code>窗口或Windows下的命令行窗口，切换到<code>$GOPATH\src</code>文件夹。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd $GOPATH</span><br><span class="line">mkdir -p github.com/devuser/golang-notes/golang-step-1/helloworld</span><br><span class="line">touch github.com/devuser/golang-notes/golang-step-1/helloworld/main.go</span><br><span class="line">cd github.com/devuser/golang-notes/golang-step-1/helloworld</span><br></pre></td></tr></table></figure>
+<p>如果在Windows下需要将<code>$GOPATH</code>修改成<code>%GOPATH%</code>。<br>上述<code>mkdir -p</code>也要查询如何之后做调整。<br><code>touch</code>用来创建一个空文件，如果在Windows下可以输入<code>nodepad</code>打开一个空文件。</p>
+<p>复制如下代码到<code>main.go</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">	fmt.Println(&quot;Hello world!&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>保存。</p>
+<h2 id="使用build命令"><a href="#使用build命令" class="headerlink" title="使用build命令"></a>使用<code>build</code>命令</h2><p>回到<code>Shell</code>窗口或Windows下的命令行窗口。<br>输入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+<p>看到输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
+<p>如果要编译成可执行文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go build -o helloworld main.go</span><br><span class="line">chmod +x helloworld</span><br><span class="line">./helloworld</span><br></pre></td></tr></table></figure></p>
+<p>或Windows下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go build -o helloworld.exe main.go</span><br><span class="line">.\helloworld.exe</span><br></pre></td></tr></table></figure></p>
+<p>使用上述命令可以编译产生可以执行文件。</p>
+<p>当然您可以把可执行文件保存在<code>$GOPATH/bin</code>目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go build -o $GOPATH/bin/helloworld main.go</span><br><span class="line">chmod +x $GOPATH/bin/helloworld</span><br><span class="line">$GOPATH/bin/helloworld</span><br></pre></td></tr></table></figure></p>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>建议在环境变量中修改，把<code>$GOPATH/bin</code>添加到<code>$PATH</code>中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$PATH=$GOPATH/bin:$PATH</span><br></pre></td></tr></table></figure></p>
+<h2 id="go-run-使用"><a href="#go-run-使用" class="headerlink" title="go run 使用"></a><code>go run</code> 使用</h2><ul>
+<li><code>go run [fileName].go</code> 用于执行go的源代码 如go run helloworld.go</li>
+<li><code>go run [fileName].go -argK=argV</code> 带参数[argK]执行go的源代码</li>
+</ul>
+<p>笔者常用的命令方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run XXX.go -ini=XXX.json -log=XXX.log</span><br></pre></td></tr></table></figure>
+<p><code>go run</code> 常用标记</p>
+<ul>
+<li>-a：强制编译相关代码，无论是否编译过</li>
+<li>-v：列出被编译的代码包的名称</li>
+<li>-a -v：列出所有被编译的代码包的名称</li>
+<li>-p n：并行编译，其中n为并行的数量 如-p 2</li>
+<li>-n：打印编译过程中所需运行的命令，但并不执行这些命令</li>
+<li>-x：打印编译过程中所需运行的命令，并执行这些命令</li>
+<li>-work：显示编译时创建的临时工作目录的路径，并且不删除这个临时工作目录</li>
+</ul>
+<p>使用方式：如 <code>go run -v [fileName].go</code></p>
+<p><em>@TODO</em>: 暂时没找到指定临时工作目录的方法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/1-1-开始第一个程序/" data-id="ck33wmx4u000z4mnp9shm47va" class="article-share-link">Share</a>
       
       
     </footer>
@@ -137,7 +167,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/index/" data-id="ck33wf1l400is20npuujj9qw3" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/index/" data-id="ck33wmxrr00j94mnp8dznjncn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -147,9 +177,63 @@
 
 
   
-    <article id="post-行走的铅笔/项目型公司的发展轨迹" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-行走的铅笔/鸡汤" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/项目型公司的发展轨迹/" class="article-date">
+    <a href="/2019/11/18/行走的铅笔/鸡汤/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="鸡汤"><a href="#鸡汤" class="headerlink" title="鸡汤"></a><strong>鸡汤</strong></h1><p>金融街笔记20180703<br>以前也经常听人说鸡汤无用，当然也有些人说鸡汤有用。<br>从我自身的体验来讲不管是别人端上来的热腾腾的鸡汤，还是我自己亲手烹饪的鸡汤，一旦和一段历史发生关联，预感和一个真实的故事可以交相印证，那么鸡汤，顿时变得非常有意义，也可以指导实践。<br>从无用的鸡汤到有用的鸡汤，中间到底发生了些什么呢。<br>是哲学意义上的，从实践中来到实践中去？<br>还是一个新知识阶层的勇于实践？<br>是现实版的知行合一？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/鸡汤/" data-id="ck33wmxr200iz4mnpnni6sb78" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-行走的铅笔/风口" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/行走的铅笔/风口/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="风口"><a href="#风口" class="headerlink" title="风口"></a><strong>风口</strong></h1><p>金融街笔记20180610<br>曾经领教过风口上猪🐷的傲慢，我是过来收电费的。<br>鼓风机马力全开，费电。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/风口/" data-id="ck33wmxr000ix4mnpvbykz5rm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-行走的铅笔/大理白族扎染" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/行走的铅笔/大理白族扎染/" class="article-date">
   <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
 </a>
     
@@ -164,7 +248,7 @@
   <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目型公司的发展轨迹</title>
+    <title>大理白族扎染</title>
     <style type="text/css" media="all">
       body {
         margin: 0;
@@ -216,9 +300,33 @@
   <body>
     <div class="container">
       <div class="post">
-        <h1 class="title">项目型公司的发展轨迹</h1>
+        <h1 class="title">大理白族扎染</h1>
         <div class="show-content">
-          <p> 项目型公司的发展轨迹 占位<br></p>
+          <div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-f744089a80c55c81.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-c10ada3c151c819c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-13d6a1f69a2ab51e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-dce92bf7af836d4e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-80a3208dbd83edbb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-b681070cac5a6f13.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-f68a73ad948a56a3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-3639ab7b0e242ffd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-f9ba2e3a7be28351.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-22d90a54d29a7c49.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-42c440ce04401f20.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2359750-a92255db5e9090d5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption">图片发自简书App</div>
+</div>
         </div>
       </div>
     </div>
@@ -228,7 +336,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/项目型公司的发展轨迹/" data-id="ck33wf1l300iq20np38rfhcjb" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/大理白族扎染/" data-id="ck33wmxqx00iu4mnpiikjz94x" class="article-share-link">Share</a>
       
       
     </footer>
@@ -337,7 +445,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/颐和园后湖/" data-id="ck33wf1l300ip20npek8tnb0a" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/颐和园后湖/" data-id="ck33wmxqv00is4mnp0kj1omlt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -347,9 +455,9 @@
 
 
   
-    <article id="post-行走的铅笔/诺基亚" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-行走的铅笔/项目型公司的发展轨迹" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/诺基亚/" class="article-date">
+    <a href="/2019/11/18/行走的铅笔/项目型公司的发展轨迹/" class="article-date">
   <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
 </a>
     
@@ -359,39 +467,76 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="诺基亚"><a href="#诺基亚" class="headerlink" title="诺基亚"></a><strong>诺基亚</strong></h1><p>金融街笔记20180723<br>很多年我去拜访一个朋友。他借住在姐夫家里。<br>他姐夫给诺基亚做机械零件，在周边置业安家。途中看到一个楼盘在开盘。回程交了订金。<br>这个也算诺基亚临终前给我发的一个大福利。<br>珍惜每一次偶遇，说不定是一个机会呢！<br>他姐夫能够在北京买房子定居说明从诺基亚赚到钱了。让我从生态圈的角度思考楼盘的价值。</p>
+        <!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目型公司的发展轨迹</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">项目型公司的发展轨迹</h1>
+        <div class="show-content">
+          <p> 项目型公司的发展轨迹 占位<br></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/诺基亚/" data-id="ck33wf1l200io20npma4j5sfm" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-行走的铅笔/风口" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/风口/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="风口"><a href="#风口" class="headerlink" title="风口"></a><strong>风口</strong></h1><p>金融街笔记20180610<br>曾经领教过风口上猪🐷的傲慢，我是过来收电费的。<br>鼓风机马力全开，费电。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/风口/" data-id="ck33wf1l200in20npirw1evv5" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/项目型公司的发展轨迹/" data-id="ck33wmxqr00iq4mnpsctrx2q1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -419,7 +564,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/陈&云同志故居/" data-id="ck33wf1l100im20npmehykfo8" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/陈&云同志故居/" data-id="ck33wmxqo00ip4mnpmu0wcvo7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -429,9 +574,9 @@
 
 
   
-    <article id="post-行走的铅笔/鸡汤" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-行走的铅笔/阅读机会" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/鸡汤/" class="article-date">
+    <a href="/2019/11/18/行走的铅笔/阅读机会/" class="article-date">
   <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
 </a>
     
@@ -441,39 +586,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="鸡汤"><a href="#鸡汤" class="headerlink" title="鸡汤"></a><strong>鸡汤</strong></h1><p>金融街笔记20180703<br>以前也经常听人说鸡汤无用，当然也有些人说鸡汤有用。<br>从我自身的体验来讲不管是别人端上来的热腾腾的鸡汤，还是我自己亲手烹饪的鸡汤，一旦和一段历史发生关联，预感和一个真实的故事可以交相印证，那么鸡汤，顿时变得非常有意义，也可以指导实践。<br>从无用的鸡汤到有用的鸡汤，中间到底发生了些什么呢。<br>是哲学意义上的，从实践中来到实践中去？<br>还是一个新知识阶层的勇于实践？<br>是现实版的知行合一？</p>
+        <h1 id="阅读机会"><a href="#阅读机会" class="headerlink" title="阅读机会"></a><strong>阅读机会</strong></h1><p>金融街笔记20180704<br>小学老师义务承担了村里报刊杂志的分发任务，委托我们学生给就近的订户送，我主动多承担了几家订户。这样我先把报刊杂志带回家速读到晚上再出去逐一送达。</p>
+<p>这样我赢得了更多的阅读机会。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/鸡汤/" data-id="ck33wf1l100ik20npkub5f136" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-行走的铅笔/革命的领导权" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/革命的领导权/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="革命的领导权"><a href="#革命的领导权" class="headerlink" title="革命的领导权"></a>革命的领导权</h1><p>金融街笔记20180611<br>革命的领导权问题，始终是最关键问题。革命环境越是恶劣，领导权斗争不是放松了，而是更加激烈。<br>评价某家公司最近发生的变化。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/革命的领导权/" data-id="ck33wf1l000ij20npnn5lzqyg" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/阅读机会/" data-id="ck33wmxql00in4mnpn9v7y6b4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -540,11 +659,7 @@
       <ul>
         
           <li>
-            <a href="/2019/11/18/行走的铅笔/奥森公园/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+            <a href="/2019/11/18/README/">(no title)</a>
           </li>
         
           <li>
@@ -552,11 +667,15 @@
           </li>
         
           <li>
-            <a href="/2019/11/18/README/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/AppID/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2019/11/18/todo/00-03-配置服务器Apache+SSL/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/GolangNotes/todo/common/">(no title)</a>
           </li>
         
       </ul>
