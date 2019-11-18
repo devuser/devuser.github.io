@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Dockerfile for Alpine+Golang | 大眼铅笔</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在开发环境，测试环境下使用 Golang 的 Docker 镜像。 目前使用两个Dockerfile，一个基于Alpine，一个基于CentOS。 使用时请注意修改掉私人有关的内容,  比如依赖的私人文件，您在docker build时找不到 私人的Github授权文件  在Dockerfile中完成如下几类动作  下载或更新到最新版本的的Golang，目前版本式1.12.3 设置时区到东八区 设">
+<meta name="keywords" content="Golang,Docker,Alpine">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dockerfile for Alpine+Golang">
+<meta property="og:url" content="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/dockerfile-golang-alpine/index.html">
+<meta property="og:site_name" content="大眼铅笔">
+<meta property="og:description" content="在开发环境，测试环境下使用 Golang 的 Docker 镜像。 目前使用两个Dockerfile，一个基于Alpine，一个基于CentOS。 使用时请注意修改掉私人有关的内容,  比如依赖的私人文件，您在docker build时找不到 私人的Github授权文件  在Dockerfile中完成如下几类动作  下载或更新到最新版本的的Golang，目前版本式1.12.3 设置时区到东八区 设">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-18T09:02:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dockerfile for Alpine+Golang">
+<meta name="twitter:description" content="在开发环境，测试环境下使用 Golang 的 Docker 镜像。 目前使用两个Dockerfile，一个基于Alpine，一个基于CentOS。 使用时请注意修改掉私人有关的内容,  比如依赖的私人文件，您在docker build时找不到 私人的Github授权文件  在Dockerfile中完成如下几类动作  下载或更新到最新版本的的Golang，目前版本式1.12.3 设置时区到东八区 设">
+  
+    <link rel="alternate" href="/atom.xml" title="大眼铅笔" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">大眼铅笔</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://devuser.github.io/bigeyepencil"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-GolangNotes/dockerfile-golang-alpine" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/03/GolangNotes/dockerfile-golang-alpine/" class="article-date">
+  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Dockerfile for Alpine+Golang
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在开发环境，测试环境下使用 <code>Golang</code> 的 <code>Docker</code> 镜像。 目前使用两个<code>Dockerfile</code>，一个基于<code>Alpine</code>，一个基于<code>CentOS</code>。</p>
+<p>使用时请注意修改掉私人有关的内容,</p>
+<ul>
+<li>比如依赖的私人文件，您在<code>docker build</code>时找不到</li>
+<li>私人的<code>Github</code>授权文件</li>
+</ul>
+<p>在<code>Dockerfile</code>中完成如下几类动作</p>
+<ol>
+<li>下载或更新到最新版本的的Golang，目前版本式<code>1.12.3</code></li>
+<li>设置时区到<strong>东八区</strong></li>
+<li>设置Golang所依赖的环境变量比如 <code>GO15VENDOREXPERIMENT</code> <code>GO111MODULE</code> <code>GOROOT</code> <code>GOPATH</code></li>
+<li>配置访问<code>Github</code>的<code>ssh</code></li>
+<li>设置工作目录 <code>WORKDIR $GOPATH/src</code></li>
+<li>声明<code>VOLUME [&quot;/data/yourcorp&quot;]</code></li>
+<li>声明开放端口<code>EXPOSE</code></li>
+</ol>
+<h1 id="Dockerfile-for-Alpine-Golang"><a href="#Dockerfile-for-Alpine-Golang" class="headerlink" title="Dockerfile for Alpine+Golang"></a>Dockerfile for Alpine+Golang</h1><p>特别注意本<code>Dockerfile</code>中直接从<code>Golang</code>官网下载最新版本，某些地区可能需要科学上网。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">FROM alpine:latest</span><br><span class="line"></span><br><span class="line">RUN apk add --no-cache \</span><br><span class="line">        ca-certificates</span><br><span class="line"></span><br><span class="line"># RUN echo &apos;http://mirrors.ustc.edu.cn/alpine/v3.5/main&apos; &gt; /etc/apk/repositories \</span><br><span class="line">    # &amp;&amp; echo &apos;http://mirrors.ustc.edu.cn/alpine/v3.5/community&apos; &gt;&gt;/etc/apk/repositories \</span><br><span class="line">RUN apk update    \</span><br><span class="line">    &amp;&amp; apk add tzdata \</span><br><span class="line">    &amp;&amp; ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \</span><br><span class="line">    &amp;&amp; echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone</span><br><span class="line"># set up nsswitch.conf for Go&apos;s &quot;netgo&quot; implementation</span><br><span class="line"># - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275</span><br><span class="line"># - Docker run --rm debian:stretch grep &apos;^hosts:&apos; /etc/nsswitch.conf</span><br><span class="line">RUN [ ! -e /etc/nsswitch.conf ] &amp;&amp; echo &apos;hosts: files dns&apos; &gt; /etc/nsswitch.conf</span><br><span class="line"></span><br><span class="line">ENV GOLANG_VERSION 1.12.3</span><br><span class="line"></span><br><span class="line">RUN set -eux; \</span><br><span class="line">    apk add --no-cache --virtual .build-deps bash gcc musl-dev openssl gcc musl-dev go git\</span><br><span class="line">    ; \</span><br><span class="line">    export \</span><br><span class="line"># set GOROOT_BOOTSTRAP such that we can actually build Go</span><br><span class="line">        GOROOT_BOOTSTRAP=&quot;$(go env GOROOT)&quot; \</span><br><span class="line"># ... and set &quot;cross-building&quot; related vars to the installed system&apos;s values so that we create a build targeting the proper arch</span><br><span class="line"># (for example, if our build host is GOARCH=amd64, but our build env/image is GOARCH=386, our build needs GOARCH=386)</span><br><span class="line">        GOOS=&quot;$(go env GOOS)&quot; \</span><br><span class="line">        GOARCH=&quot;$(go env GOARCH)&quot; \</span><br><span class="line">        GOHOSTOS=&quot;$(go env GOHOSTOS)&quot; \</span><br><span class="line">        GOHOSTARCH=&quot;$(go env GOHOSTARCH)&quot; \</span><br><span class="line">    ; \</span><br><span class="line"># also explicitly set GO386 and GOARM if appropriate</span><br><span class="line"># https://github.com/docker-library/golang/issues/184</span><br><span class="line">    apkArch=&quot;$(apk --print-arch)&quot;; \</span><br><span class="line">    case &quot;$apkArch&quot; in \</span><br><span class="line">        armhf) export GOARM=&apos;6&apos; ;; \</span><br><span class="line">        x86) export GO386=&apos;387&apos; ;; \</span><br><span class="line">    esac; \</span><br><span class="line">    \</span><br><span class="line">    wget -O go.tgz &quot;https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz&quot;; \</span><br><span class="line">    # echo &apos;bc1ef02bb1668835db1390a2e478dcbccb5dd16911691af9d75184bbe5aa943e *go.tgz&apos; | sha256sum -c -; \</span><br><span class="line">    tar -C /usr/local -xzf go.tgz; \</span><br><span class="line">    rm go.tgz; \</span><br><span class="line">    \</span><br><span class="line">    cd /usr/local/go/src; \</span><br><span class="line">    ./make.bash; \</span><br><span class="line">    \</span><br><span class="line">    rm -rf \</span><br><span class="line"># https://github.com/golang/go/blob/0b30cf534a03618162d3015c8705dd2231e34703/src/cmd/dist/buildtool.go#L121-L125</span><br><span class="line">        /usr/local/go/pkg/bootstrap \</span><br><span class="line"># https://golang.org/cl/82095</span><br><span class="line"># https://github.com/golang/build/blob/e3fe1605c30f6a3fd136b561569933312ede8782/cmd/release/releaselet.go#L56</span><br><span class="line">        /usr/local/go/pkg/obj \</span><br><span class="line">    ; \</span><br><span class="line">    export PATH=&quot;/usr/local/go/bin:/usr/bin:$PATH&quot;; \</span><br><span class="line">    go version;    \</span><br><span class="line">    git version</span><br><span class="line"># apk del .build-deps</span><br><span class="line">ENV GO15VENDOREXPERIMENT 1</span><br><span class="line">ENV GO111MODULE on</span><br><span class="line">ENV GOROOT /usr/local/go</span><br><span class="line">ENV GOPATH /data/boyosoft/goBillProcess</span><br><span class="line"># ENV DPPATH $GOPATH/src/vendor/github.com/cpfc/dp</span><br><span class="line">ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH</span><br><span class="line"></span><br><span class="line"># ENV GOPATH /go</span><br><span class="line"># ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH</span><br><span class="line"></span><br><span class="line"># RUN mkdir -p &quot;$GOPATH/src&quot; &quot;$GOPATH/bin&quot; &amp;&amp; \</span><br><span class="line">#   chmod -R 777 &quot;$GOPATH&quot;  &amp;&amp;  \</span><br><span class="line">RUN mkdir -p /root/.ssh</span><br><span class="line">COPY authorized_keys /root/.ssh/authorized_keys</span><br><span class="line">COPY id_rsa_github /root/.ssh/id_rsa_github</span><br><span class="line"># COPY id_rsa_bigdata_prod /root/.ssh/id_rsa_bigdata_prod</span><br><span class="line">COPY config /root/.ssh/config</span><br><span class="line">COPY known_hosts /root/.ssh/known_hosts</span><br><span class="line">RUN cd /root/.ssh; \</span><br><span class="line">      chmod 400  *; \</span><br><span class="line">      cd ..;    \</span><br><span class="line">    chmod 700 .ssh;    \</span><br><span class="line">    git config --global user.name &quot;devuser&quot;;    \</span><br><span class="line">    git config --global user.email &quot;pythoner@icloud.com&quot;</span><br><span class="line">#</span><br><span class="line">WORKDIR $GOPATH/src</span><br><span class="line">VOLUME [&quot;/data/yourcorp&quot;]</span><br><span class="line">EXPOSE 8080 8081 3000 3001 9000 9001 9090</span><br></pre></td></tr></table></figure>
+<h1 id="Dockerfile-for-CentOS-Golang"><a href="#Dockerfile-for-CentOS-Golang" class="headerlink" title="Dockerfile for CentOS+Golang"></a>Dockerfile for CentOS+Golang</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line"># Version: 0.0.1</span><br><span class="line">FROM centos:latest</span><br><span class="line">MAINTAINER devuser &quot;devuser@yourcorp.net&quot;</span><br><span class="line"># RUN yum install -y wget</span><br><span class="line">#================================================================</span><br><span class="line"># 创建构建或初始化容器时的若干中文件</span><br><span class="line">RUN mkdir /dockerdata</span><br><span class="line">WORKDIR /dockerdata</span><br><span class="line">ADD go1.12.3.linux-amd64.tar.gz /dockerdata</span><br><span class="line"># 升级到centos-7</span><br><span class="line"># COPY CentOS6-Base-163.repo /dockerdata/CentOS-Base.repo</span><br><span class="line"># COPY geekery.repo /dockerdata/geekery.repo</span><br><span class="line"># RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup &amp;&amp;    \</span><br><span class="line">#         cp /dockerdata/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo    &amp;&amp;    \</span><br><span class="line">#         cp /dockerdata/geekery.repo /etc/yum.repos.d/geekery.repo</span><br><span class="line">RUN yum clean all &amp;&amp;    \</span><br><span class="line">        yum makecache    &amp;&amp;    \</span><br><span class="line">        yum -y update    &amp;&amp;    \</span><br><span class="line">        yum install -y gcc git</span><br><span class="line"># RUN yum install -y curl    &amp;&amp;    \</span><br><span class="line"></span><br><span class="line">#     yum install -y readline-devel    &amp;&amp;    \</span><br><span class="line">#     yum install -y libXt-devel    &amp;&amp;    \</span><br><span class="line">#     yum install -y make</span><br><span class="line"># screen ftp</span><br><span class="line"># RUN yum install -y gcc-gfortran</span><br><span class="line"></span><br><span class="line"># gcc-c++</span><br><span class="line"># RUN yum install -y readline-devel</span><br><span class="line"># RUN yum install -y libXt-devel</span><br><span class="line"># RUN yum install -y make</span><br><span class="line"># git</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line"># RUN yum install -y vixie-cron</span><br><span class="line"># RUN yum install -y crontabs</span><br><span class="line"># RUN chkconfig --level 35 crond on</span><br><span class="line"># RUN yum install -y bzip2recover</span><br><span class="line"># RUN yum install -y bzip2</span><br><span class="line"></span><br><span class="line"># install R packages</span><br><span class="line"># RUN yum install -y epel-release</span><br><span class="line"># RUN yum install -y R</span><br><span class="line">#================================================================</span><br><span class="line"># RUN yum install -y mysql-community-server</span><br><span class="line"># RUN yum install tomcat6 tomcat6-webapps tomcat6-admin-webapps</span><br><span class="line">#================================================================</span><br><span class="line"># RUN yum install -y redis-server</span><br><span class="line"># RUN yum install -y redis-tools</span><br><span class="line">#================================================================RUN eval &quot;TZ=&apos;Asia/Shanghai&apos;; export TZ&quot;</span><br><span class="line">RUN echo &quot;export TZ=\&quot;Asia/Shanghai\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export TS=\&quot;`date -d today +&quot;%-Y%-m%-d%k%M%S&quot;`\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export VERSION=\&quot;`date -d today +&quot;v2.4.0.%-Y%-m%-d%-k%M%S&quot;`\&quot;&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">#@todo: 争取把跨平台编译的脚本保存在Docker容器中</span><br><span class="line"># RUN echo `for GOOS in windows;do for GOARCH in 386 amd64; do go build -v -ldflags &quot;-s -w -X main._VERSION_=&quot;$VERSION  -o BillProcess-$GOOS-$GOARCH-v$TS.exe; done; done`</span><br><span class="line"></span><br><span class="line"># RUN rm /etc/localtime3</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"># 此处纯粹是为配合腾讯的习惯，腾讯虚拟服务器的工作卷名字叫data</span><br><span class="line"># RUN export http_proxy=&quot;10.251.233.145:8888&quot;</span><br><span class="line"># RUN export https_prxy=&quot;10.251.233.145:8888&quot;</span><br><span class="line">ENV LANG en_US.UTF-8</span><br><span class="line">ENV LC_ALL en_US.UTF-8</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"></span><br><span class="line">RUN echo &quot;47.92.84.245\tyourcorp&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;47.92.84.245\tyourcorp.net&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;47.92.84.245\twww.yourcorp.net&quot; &gt;&gt; /dockerdata/ex_hosts &amp;&amp;  \</span><br><span class="line">        touch /dockerdata/update_hosts    &amp;&amp;    \</span><br><span class="line">        echo &quot;cat /dockerdata/ex_hosts &gt;&gt; /etc/hosts&quot; &gt;&gt; /dockerdata/update_hosts &amp;&amp;  \</span><br><span class="line">        echo &quot;/etc/init.d/netfs restart&quot; &gt;&gt; /dockerdata/update_hosts    &amp;&amp;  \</span><br><span class="line">        chmod 700 /dockerdata/update_hosts  &amp;&amp;  \</span><br><span class="line">        rm -rf /dockerdata/ex_hosts    &amp;&amp;    \</span><br><span class="line">        rm -rf /usr/lib/golang  &amp;&amp;  \</span><br><span class="line">    cp -rf /dockerdata/go /usr/lib/golang   &amp;&amp;  \</span><br><span class="line">        rm -rf /dockerdata/go  &amp;&amp;  \</span><br><span class="line">    mkdir -p /root/.ssh &amp;&amp;  \</span><br><span class="line">    chmod 700 /root/.ssh</span><br><span class="line"></span><br><span class="line">ENV GO15VENDOREXPERIMENT 1</span><br><span class="line">ENV GO111MODULE on</span><br><span class="line">ENV GOROOT /usr/lib/golang</span><br><span class="line">ENV GOPATH /data/yourcorp/goBillProcess</span><br><span class="line"># ENV DPPATH $GOPATH/src/vendor/github.com/cpfc/dp</span><br><span class="line">ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH</span><br><span class="line"></span><br><span class="line">#================================================================</span><br><span class="line"># ADD getlatest.sh /dockerdata/getlatest.sh</span><br><span class="line"></span><br><span class="line">RUN mkdir -p /root/.ssh</span><br><span class="line">COPY authorized_keys /root/.ssh/authorized_keys</span><br><span class="line">COPY id_rsa_github /root/.ssh/id_rsa_github</span><br><span class="line"># COPY id_rsa_bigdata_prod /root/.ssh/id_rsa_bigdata_prod</span><br><span class="line">COPY config /root/.ssh/config</span><br><span class="line">COPY known_hosts /root/.ssh/known_hosts</span><br><span class="line">RUN cd /root/.ssh   &amp;&amp;  \</span><br><span class="line">    chmod 400 *    &amp;&amp;  \</span><br><span class="line">    cd ..   &amp;&amp;  \</span><br><span class="line">    chmod 700 .ssh</span><br><span class="line"></span><br><span class="line"># RUN git clone git@git.18.tl:devuser/processtest.git gittest</span><br><span class="line"># RUN git clone http://devuser:Pocketbbs@www.taolch.com:10080/git/goBillProcess.git</span><br><span class="line"></span><br><span class="line"># RUN chmod 700 /dockerdata/getlatest.sh</span><br><span class="line">#RUN echo &quot;#!/bin/sh&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;cd $APPAPIPATH&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;go build -o $APPNAME main.go&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    echo &quot;scp $APPNAME 192.168.200.244:~/$APPNAME&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#    chmod 700 /dockerdata/build-$APPNAME.sh</span><br><span class="line"></span><br><span class="line"># RUN echo &quot;#!/bin/sh&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;cd $APPAPIPATH&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;go build -o $APPNAME $APPNAME.go&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         echo &quot;scp $APPNAME 10.104.19.122:~/data/yourcorp/$APPNAME&quot; &gt;&gt; /dockerdata/build-$APPNAME.sh; \</span><br><span class="line">#         chmod 700 /dockerdata/build-$APPNAME.sh</span><br><span class="line"></span><br><span class="line"># RUN git config --global user.email &quot;devuser@yourcorp.net&quot;</span><br><span class="line"># RUN git config --global user.name &quot;devuser&quot;</span><br><span class="line"># RUN git config --global push.default matching</span><br><span class="line">RUN git config --global user.name &quot;devuser&quot;</span><br><span class="line">RUN git config --global user.email &quot;pythoner@icloud.com&quot;</span><br><span class="line"></span><br><span class="line">###############################################################################</span><br><span class="line"># 初始化root用户的环境变量</span><br><span class="line">RUN echo &quot;export GOPATH=$GOPATH&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GOROOT=$GOROOT&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GO15VENDOREXPERIMENT=$GO15VENDOREXPERIMENT&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export GO111MODULE=$GO111MODULE&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export JDALPHASERVERPATH=$GOPATH/src/github.com/yourcorp/jdalphaserver&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    echo &quot;export PATH=$PATH&quot; &gt;&gt; /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    cat /root/.bashrc    &amp;&amp;    \</span><br><span class="line">    rm -rf /var/cache/yum</span><br><span class="line"># RUN source /root/.profile</span><br><span class="line"># RUN touch /usr/local/bin/q &amp;&amp;  \</span><br><span class="line">#     chmod +x /usr/local/bin/q  &amp;&amp;  \</span><br><span class="line">#     echo &quot;#!/bin/bash&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;cd $JDALPHASERVERPATH&quot; &gt;&gt; /usr/local/bin/q  &amp;&amp;  \</span><br><span class="line">#     echo &quot;rm -rf jdalphaserver&quot; &gt;&gt; /usr/local/bin/q   &amp;&amp;  \</span><br><span class="line">#     echo &quot;go build&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;chmod +x jdalphaserver&quot; &gt;&gt; /usr/local/bin/q &amp;&amp; \</span><br><span class="line">#     # echo &quot;./jdalphaserver -syncdb&quot; &gt;&gt; /usr/local/bin/q    &amp;&amp;  \</span><br><span class="line">#     echo &quot;./jdalphaserver&quot; &gt;&gt; /usr/local/bin/q</span><br><span class="line">###############################################################################</span><br><span class="line"></span><br><span class="line">#RUN mkdir -p /dockerdata/www/html/static</span><br><span class="line"># RUN git commit -a -m &quot;update when compile the dockerfile&quot;</span><br><span class="line"># RUN git push</span><br><span class="line"># goBillProcess内嵌的Web服务器占用的端口号</span><br><span class="line">WORKDIR $GOPATH/src</span><br><span class="line">VOLUME [&quot;/data/yourcorp&quot;]</span><br><span class="line">EXPOSE 8080 8081 3000 3001 9000 9001 9090</span><br><span class="line"></span><br><span class="line"># export VERSION=`date -d today +&quot;v2.4.0.%-Y%-m%-d%-k%M%S&quot;`</span><br><span class="line"># export TS=`date -d today +&quot;%-Y%-m%-d%k%M%S&quot;`</span><br><span class="line"># for GOOS in windows;do for GOARCH in 386 amd64; do go build -v -ldflags &quot;-s -w -X main._VERSION_=&quot;$VERSION  -o BillProcess-$GOOS-$GOARCH-v$TS.exe; done; done</span><br><span class="line"></span><br><span class="line"># ENTRYPOINT [&quot;/root/config_crond.sh&quot;]</span><br><span class="line"># CMD [&quot;/dockerdata/build-$APPNAME.sh&quot;]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/dockerfile-golang-alpine/" data-id="ck33wf1g8005w20np18gtiiv9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Alpine/">Alpine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/03/GolangNotes/Gin框架介绍/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Gin框架介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/03/行走的铅笔/Python高级码农面试题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python高级码农面试题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Golang/">Golang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-DevOps/">Linux DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/面试题/">面试题</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/习作/">习作</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/人力资源/">人力资源</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人力资源/面试/">面试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/创作中/">创作中</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Taro/">Taro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/mpvue/">mpvue</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/">思维模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/作战半径/">作战半径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/思维陷阱/">思维陷阱</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Alpine/">Alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gin/">Gin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JD/">JD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Taro/">Taro</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mpvue/">mpvue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nohup/">nohup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/习作/">习作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人力资源/">人力资源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作战半径/">作战半径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创作中/">创作中</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/卢作孚/">卢作孚</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图书/">图书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/天龙八部/">天龙八部</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安邦/">安邦</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小数定律/">小数定律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小程序/">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/岗位说明书/">岗位说明书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/岳麓书院/">岳麓书院</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左宗棠/">左宗棠</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/巨婴/">巨婴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/巨婴女/">巨婴女</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幂律分布/">幂律分布</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/彼得原理/">彼得原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/彼得林奇/">彼得林奇</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微信/">微信</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维模型/">思维模型</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维陷阱/">思维陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/房地产/">房地产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术栈/">技术栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/招商银行/">招商银行</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/昆山/">昆山</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/曾国藩/">曾国藩</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/清单管理-英语/">清单管理 - 英语</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/猎头/">猎头</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/知识图谱/">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/社会学/">社会学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/金融街/">金融街</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试题/">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Alpine/" style="font-size: 11px;">Alpine</a> <a href="/tags/Docker/" style="font-size: 17px;">Docker</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Golang/" style="font-size: 19px;">Golang</a> <a href="/tags/JD/" style="font-size: 10px;">JD</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Taro/" style="font-size: 18px;">Taro</a> <a href="/tags/mpvue/" style="font-size: 15px;">mpvue</a> <a href="/tags/nohup/" style="font-size: 10px;">nohup</a> <a href="/tags/习作/" style="font-size: 16px;">习作</a> <a href="/tags/人力资源/" style="font-size: 11px;">人力资源</a> <a href="/tags/作战半径/" style="font-size: 11px;">作战半径</a> <a href="/tags/创作中/" style="font-size: 20px;">创作中</a> <a href="/tags/卢作孚/" style="font-size: 10px;">卢作孚</a> <a href="/tags/图书/" style="font-size: 10px;">图书</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/天龙八部/" style="font-size: 10px;">天龙八部</a> <a href="/tags/安邦/" style="font-size: 10px;">安邦</a> <a href="/tags/小数定律/" style="font-size: 10px;">小数定律</a> <a href="/tags/小程序/" style="font-size: 11px;">小程序</a> <a href="/tags/岗位说明书/" style="font-size: 10px;">岗位说明书</a> <a href="/tags/岳麓书院/" style="font-size: 10px;">岳麓书院</a> <a href="/tags/左宗棠/" style="font-size: 10px;">左宗棠</a> <a href="/tags/巨婴/" style="font-size: 10px;">巨婴</a> <a href="/tags/巨婴女/" style="font-size: 10px;">巨婴女</a> <a href="/tags/幂律分布/" style="font-size: 10px;">幂律分布</a> <a href="/tags/彼得原理/" style="font-size: 10px;">彼得原理</a> <a href="/tags/彼得林奇/" style="font-size: 11px;">彼得林奇</a> <a href="/tags/微信/" style="font-size: 11px;">微信</a> <a href="/tags/思维模型/" style="font-size: 16px;">思维模型</a> <a href="/tags/思维陷阱/" style="font-size: 10px;">思维陷阱</a> <a href="/tags/房地产/" style="font-size: 12px;">房地产</a> <a href="/tags/技术栈/" style="font-size: 10px;">技术栈</a> <a href="/tags/招商银行/" style="font-size: 10px;">招商银行</a> <a href="/tags/昆山/" style="font-size: 10px;">昆山</a> <a href="/tags/曾国藩/" style="font-size: 10px;">曾国藩</a> <a href="/tags/清单管理-英语/" style="font-size: 10px;">清单管理 - 英语</a> <a href="/tags/猎头/" style="font-size: 10px;">猎头</a> <a href="/tags/知识图谱/" style="font-size: 11px;">知识图谱</a> <a href="/tags/社会学/" style="font-size: 10px;">社会学</a> <a href="/tags/金融街/" style="font-size: 14px;">金融街</a> <a href="/tags/面试/" style="font-size: 11px;">面试</a> <a href="/tags/面试题/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/18/行走的铅笔/奥森公园/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/GolangNotes/todo/README 2/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/README/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/todo/00-03-配置服务器Apache+SSL/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 大眼铅笔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

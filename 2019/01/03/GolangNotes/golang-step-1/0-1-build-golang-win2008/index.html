@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>使用批处理文件在Windows下打包Golang项目 | 大眼铅笔</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在真实项目打包过程中，存在如下需求  清理现场 构建时间戳 编译即go build命令，但是需要一些编译参数，输出可执行文件带时间戳 压缩  下文给出了批处理脚本和最佳实践，鼓励选用。 使用方法 修改main.go定义全局变量_VERSION_并在main方法中日志输出版本号 12345678910package mainimport ( &amp;quot;log&amp;quot; )// 如下变量供编译器使">
+<meta name="keywords" content="Golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用批处理文件在Windows下打包Golang项目">
+<meta property="og:url" content="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/golang-step-1/0-1-build-golang-win2008/index.html">
+<meta property="og:site_name" content="大眼铅笔">
+<meta property="og:description" content="在真实项目打包过程中，存在如下需求  清理现场 构建时间戳 编译即go build命令，但是需要一些编译参数，输出可执行文件带时间戳 压缩  下文给出了批处理脚本和最佳实践，鼓励选用。 使用方法 修改main.go定义全局变量_VERSION_并在main方法中日志输出版本号 12345678910package mainimport ( &amp;quot;log&amp;quot; )// 如下变量供编译器使">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-03T03:43:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用批处理文件在Windows下打包Golang项目">
+<meta name="twitter:description" content="在真实项目打包过程中，存在如下需求  清理现场 构建时间戳 编译即go build命令，但是需要一些编译参数，输出可执行文件带时间戳 压缩  下文给出了批处理脚本和最佳实践，鼓励选用。 使用方法 修改main.go定义全局变量_VERSION_并在main方法中日志输出版本号 12345678910package mainimport ( &amp;quot;log&amp;quot; )// 如下变量供编译器使">
+  
+    <link rel="alternate" href="/atom.xml" title="大眼铅笔" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">大眼铅笔</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://devuser.github.io/bigeyepencil"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-GolangNotes/golang-step-1/0-1-build-golang-win2008" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/03/GolangNotes/golang-step-1/0-1-build-golang-win2008/" class="article-date">
+  <time datetime="2019-01-03T02:15:12.000Z" itemprop="datePublished">2019-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用批处理文件在Windows下打包Golang项目
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在真实项目打包过程中，存在如下需求</p>
+<ol>
+<li>清理现场</li>
+<li>构建时间戳</li>
+<li>编译即<code>go build</code>命令，但是需要一些编译参数，输出可执行文件带时间戳</li>
+<li>压缩</li>
+</ol>
+<p>下文给出了批处理脚本和最佳实践，鼓励选用。</p>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><ol>
+<li><p>修改<code>main.go</code>定义全局变量<code>_VERSION_</code>并在<code>main</code>方法中日志输出版本号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import ( &quot;log&quot; )</span><br><span class="line"></span><br><span class="line">// 如下变量供编译器使用，不适用于golint的修改建议 var _VERSION_ = &quot;unknown&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">log.Printf(&quot;current program version: %s&quot;, _VERSION_)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建议在项目目录下创建 <code>gbuildwin.bat</code> 批处理脚本</p>
+</li>
+<li><p>复制如下内容到 <code>gbuildwin.bat</code> 批处理脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">echo off</span><br><span class="line">echo 编译打包命令如下，产生文件名带时间戳</span><br><span class="line">echo ==========================================</span><br><span class="line">set /a t1=(1%time:~0,2%-100)*1</span><br><span class="line">if %t1% LSS 10 set t1=0%t1%</span><br><span class="line">set ymd_hm=%date:~0,4%%date:~5,2%%date:~8,2%%t1%%time:~3,2%%time:~6,2%</span><br><span class="line">set Version=v2.4.%ymd_hm%&quot;</span><br><span class="line">echo 如果需要请修改GOPATH</span><br><span class="line">@REM set GOPATH=M:\working\goYOURPROGRAM</span><br><span class="line">echo 版本号: %Version%</span><br><span class="line">@echo on</span><br><span class="line">go clean</span><br><span class="line">go generate</span><br><span class="line">go build -o YOURPROGRAM.exe -ldflags &quot;-s -w -X main._VERSION_=%Version%&quot; main.go</span><br><span class="line">set PATH=%PATH%;C:\Program Files\WinRAR;</span><br><span class="line">copy YOURPROGRAM.exe &quot;YOURPROGRAM_v%ymd_hm%.exe&quot;</span><br><span class="line">rar a &quot;YOURPROGRAM_v%ymd_hm%.ra_&quot; &quot;YOURPROGRAM_v%ymd_hm%.exe&quot;</span><br><span class="line">@echo off</span><br><span class="line">echo ==========================================</span><br><span class="line">@echo on</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>批处理文件在<code>Windows XP</code>和<code>Windows 2008</code>下测试通过。</p>
+<p>上述批处理脚本输出如下可执行文件 <code>YOURPROGRAM_v20190103113702.exe</code></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><strong>使用上述批处理脚本时请将<code>YOURPROGRAM</code>替换成您的项目名称</strong></li>
+<li>根据修改设置 <code>GOPATH</code></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/01/03/GolangNotes/golang-step-1/0-1-build-golang-win2008/" data-id="ck33wf1l500iv20npuezcbv0i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/03/GolangNotes/0-1-在Windows下编译Golang程序/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Windows下编译Golang
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/03/行走的铅笔/Python高级码农推荐-Python源码剖析-陈儒著/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python源码剖析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Golang/">Golang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-DevOps/">Linux DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/面试题/">面试题</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/习作/">习作</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/人力资源/">人力资源</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人力资源/面试/">面试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/创作中/">创作中</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Taro/">Taro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/mpvue/">mpvue</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/">思维模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/作战半径/">作战半径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/思维陷阱/">思维陷阱</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Alpine/">Alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gin/">Gin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JD/">JD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Taro/">Taro</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mpvue/">mpvue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nohup/">nohup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/习作/">习作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人力资源/">人力资源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作战半径/">作战半径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创作中/">创作中</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/卢作孚/">卢作孚</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图书/">图书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/天龙八部/">天龙八部</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安邦/">安邦</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小数定律/">小数定律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小程序/">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/岗位说明书/">岗位说明书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/岳麓书院/">岳麓书院</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左宗棠/">左宗棠</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/巨婴/">巨婴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/巨婴女/">巨婴女</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幂律分布/">幂律分布</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/彼得原理/">彼得原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/彼得林奇/">彼得林奇</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微信/">微信</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维模型/">思维模型</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维陷阱/">思维陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/房地产/">房地产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术栈/">技术栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/招商银行/">招商银行</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/昆山/">昆山</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/曾国藩/">曾国藩</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/清单管理-英语/">清单管理 - 英语</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/猎头/">猎头</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/知识图谱/">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/社会学/">社会学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/金融街/">金融街</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试题/">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Alpine/" style="font-size: 11px;">Alpine</a> <a href="/tags/Docker/" style="font-size: 17px;">Docker</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Golang/" style="font-size: 19px;">Golang</a> <a href="/tags/JD/" style="font-size: 10px;">JD</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Taro/" style="font-size: 18px;">Taro</a> <a href="/tags/mpvue/" style="font-size: 15px;">mpvue</a> <a href="/tags/nohup/" style="font-size: 10px;">nohup</a> <a href="/tags/习作/" style="font-size: 16px;">习作</a> <a href="/tags/人力资源/" style="font-size: 11px;">人力资源</a> <a href="/tags/作战半径/" style="font-size: 11px;">作战半径</a> <a href="/tags/创作中/" style="font-size: 20px;">创作中</a> <a href="/tags/卢作孚/" style="font-size: 10px;">卢作孚</a> <a href="/tags/图书/" style="font-size: 10px;">图书</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/天龙八部/" style="font-size: 10px;">天龙八部</a> <a href="/tags/安邦/" style="font-size: 10px;">安邦</a> <a href="/tags/小数定律/" style="font-size: 10px;">小数定律</a> <a href="/tags/小程序/" style="font-size: 11px;">小程序</a> <a href="/tags/岗位说明书/" style="font-size: 10px;">岗位说明书</a> <a href="/tags/岳麓书院/" style="font-size: 10px;">岳麓书院</a> <a href="/tags/左宗棠/" style="font-size: 10px;">左宗棠</a> <a href="/tags/巨婴/" style="font-size: 10px;">巨婴</a> <a href="/tags/巨婴女/" style="font-size: 10px;">巨婴女</a> <a href="/tags/幂律分布/" style="font-size: 10px;">幂律分布</a> <a href="/tags/彼得原理/" style="font-size: 10px;">彼得原理</a> <a href="/tags/彼得林奇/" style="font-size: 11px;">彼得林奇</a> <a href="/tags/微信/" style="font-size: 11px;">微信</a> <a href="/tags/思维模型/" style="font-size: 16px;">思维模型</a> <a href="/tags/思维陷阱/" style="font-size: 10px;">思维陷阱</a> <a href="/tags/房地产/" style="font-size: 12px;">房地产</a> <a href="/tags/技术栈/" style="font-size: 10px;">技术栈</a> <a href="/tags/招商银行/" style="font-size: 10px;">招商银行</a> <a href="/tags/昆山/" style="font-size: 10px;">昆山</a> <a href="/tags/曾国藩/" style="font-size: 10px;">曾国藩</a> <a href="/tags/清单管理-英语/" style="font-size: 10px;">清单管理 - 英语</a> <a href="/tags/猎头/" style="font-size: 10px;">猎头</a> <a href="/tags/知识图谱/" style="font-size: 11px;">知识图谱</a> <a href="/tags/社会学/" style="font-size: 10px;">社会学</a> <a href="/tags/金融街/" style="font-size: 14px;">金融街</a> <a href="/tags/面试/" style="font-size: 11px;">面试</a> <a href="/tags/面试题/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/18/行走的铅笔/奥森公园/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/GolangNotes/todo/README 2/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/README/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/todo/00-03-配置服务器Apache+SSL/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 大眼铅笔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

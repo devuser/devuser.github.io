@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>大眼铅笔</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="简书大眼铅笔的原始文稿">
+<meta name="keywords" content="大眼铅笔 Taro Golang AI bigdata bigeyepencil Spark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="大眼铅笔">
+<meta property="og:url" content="https://devuser.github.io/bigeyepencil/page/28/index.html">
+<meta property="og:site_name" content="大眼铅笔">
+<meta property="og:description" content="简书大眼铅笔的原始文稿">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大眼铅笔">
+<meta name="twitter:description" content="简书大眼铅笔的原始文稿">
+  
+    <link rel="alternate" href="/atom.xml" title="大眼铅笔" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">大眼铅笔</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://devuser.github.io/bigeyepencil"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-GolangNotes/golang-step-1/1_1_常用第三方包" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/GolangNotes/golang-step-1/1_1_常用第三方包/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/GolangNotes/golang-step-1/1_1_常用第三方包/">常用第三方包</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="常用第三方包"><a href="#常用第三方包" class="headerlink" title="常用第三方包"></a>常用第三方包</h1><h2 id="包的介绍"><a href="#包的介绍" class="headerlink" title="包的介绍"></a>包的介绍</h2><p>包类似Java中概念，<code>jar</code> 是源代码管理，分发的最小单位。</p>
+<p>目前多数包来自 <code>Github</code> 官方包来自 <code>golang.org/x/...</code></p>
+<p>可以在如下网址查询到高频使用的第三方包清单 <code>https://godoc.org</code></p>
+<h2 id="常用清单"><a href="#常用清单" class="headerlink" title="常用清单"></a>常用清单</h2><ol>
+<li><code>github.com/astaxie/beego</code> 成熟稳定的<code>Web</code>框架，包含更过的<code>Web Framework</code>特性 <strong>国内开发者 astaxie</strong></li>
+<li><code>github.com/go-redis/redis</code> 连接<code>Redis</code></li>
+<li><code>github.com/gomodule/redigo/redis</code> 连接<code>Redis</code></li>
+<li><code>github.com/jinzhu/gorm</code> 数据库<code>ORM</code>框架，类似Java领域的<code>Hibernate</code>或<code>MyBatis</code> <strong>国内开发者</strong></li>
+<li><code>github.com/sirupsen/logrus</code> 日志框架，类似Java领域的<code>log4j</code></li>
+<li><code>github.com/robfig/cron</code> 定时任务，类似Java领域的<code>Quartz</code></li>
+<li><code>github.com/gin-gonic/gin</code> 精巧高效的<code>Web</code>框架，多用于提供<code>Web</code>服务</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/GolangNotes/golang-step-1/1_1_常用第三方包/" data-id="ck33wf1le00jj20npn0uswlfw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/golang-step-10-web/index" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/GolangNotes/golang-step-10-web/index/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/GolangNotes/golang-step-10-web/index/">待撰写</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/GolangNotes/golang-step-10-web/index/" data-id="ck33wf1lf00jk20npq75qzgr4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/golang-step-1/0-2-Docker环境" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/GolangNotes/golang-step-1/0-2-Docker环境/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/GolangNotes/golang-step-1/0-2-Docker环境/">Docker环境</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在工作中引入Docker用在开发测试环境中，还是获得超强效果。 基于两个前提</p>
+<ul>
+<li>物理机不够</li>
+<li>配置成本高</li>
+</ul>
+<p>针对痛点引入银弹，坚持下来发现不是银弹，如果途中放弃的话就是银弹。</p>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>鼓励每个开发者在本机安装<code>Docker</code>，并且配置基础的开发环境， 比如配置<code>Redis</code>+<code>MySQL</code>+<code>Golang</code>三个镜像，并且可以随时启动。</p>
+<h1 id="启动Redis"><a href="#启动Redis" class="headerlink" title="启动Redis"></a>启动<code>Redis</code></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-redis -d redis:alpine</span><br></pre></td></tr></table></figure>
+<h1 id="启动MySQL"><a href="#启动MySQL" class="headerlink" title="启动MySQL"></a>启动<code>MySQL</code></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=root -p 13306:3306 -v $HOME/working/sql:/data/devuser/sql -w /data/devuser/sql -d mysql:5.5</span><br></pre></td></tr></table></figure>
+<h2 id="删除所有的none镜像"><a href="#删除所有的none镜像" class="headerlink" title="删除所有的none镜像"></a>删除所有的<code>none</code>镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi $(docker images|grep &quot;none&quot;|awk &apos;&#123;print$3&#125;&apos;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/GolangNotes/golang-step-1/0-2-Docker环境/" data-id="ck33wf1lf00jm20nppdax2r2o" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/golang-step-1/1_2_Cmd" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/GolangNotes/golang-step-1/1_2_Cmd/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/GolangNotes/golang-step-1/1_2_Cmd/">开始第一个程序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>打开<code>Shell</code>窗口或Windows下的命令行窗口，切换到<code>$GOPATH\src</code>文件夹。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd $GOPATH</span><br><span class="line">mkdir -p github.com/devuser/golang-notes/golang-step-1/helloworld</span><br><span class="line">touch github.com/devuser/golang-notes/golang-step-1/helloworld/main.go</span><br><span class="line">cd github.com/devuser/golang-notes/golang-step-1/helloworld</span><br></pre></td></tr></table></figure>
+<p>如果在Windows下需要将<code>$GOPATH</code>修改成<code>%GOPATH%</code>。 上述<code>mkdir -p</code>也要查询如何之后做调整。 <code>touch</code>用来创建一个空文件，如果在Windows下可以输入<code>nodepad</code>打开一个空文件。</p>
+<p>复制如下代码到<code>main.go</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">    fmt.Println(&quot;Hello world!&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>保存。</p>
+<h1 id="使用build命令"><a href="#使用build命令" class="headerlink" title="使用build命令"></a>使用<code>build</code>命令</h1><p>回到<code>Shell</code>窗口或Windows下的命令行窗口。 输入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+<p>看到输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
+<p>如果要编译成可执行文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go build -o helloworld main.go</span><br><span class="line">chmod +x helloworld</span><br><span class="line">./helloworld</span><br></pre></td></tr></table></figure>
+<p>或Windows下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go build -o helloworld.exe main.go</span><br><span class="line">.\helloworld.exe</span><br></pre></td></tr></table></figure>
+<p>使用上述命令可以编译产生可以执行文件。</p>
+<p>当然您可以把可执行文件保存在<code>$GOPATH/bin</code>目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go build -o $GOPATH/bin/helloworld main.go</span><br><span class="line">chmod +x $GOPATH/bin/helloworld</span><br><span class="line">$GOPATH/bin/helloworld</span><br></pre></td></tr></table></figure>
+<h1 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h1><p>建议在环境变量中修改，把<code>$GOPATH/bin</code>添加到<code>$PATH</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$PATH=$GOPATH/bin:$PATH</span><br></pre></td></tr></table></figure>
+<h1 id="go-run-使用"><a href="#go-run-使用" class="headerlink" title="go run 使用"></a><code>go run</code> 使用</h1><ul>
+<li><code>go run [fileName].go</code> 用于执行go的源代码 如go run helloworld.go</li>
+<li><code>go run [fileName].go -argK=argV</code> 带参数[argK]执行go的源代码</li>
+</ul>
+<p>笔者常用的命令方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run XXX.go -ini=XXX.json -log=XXX.log</span><br></pre></td></tr></table></figure>
+<p><code>go run</code> 常用标记</p>
+<ul>
+<li>-a：强制编译相关代码，无论是否编译过</li>
+<li>-v：列出被编译的代码包的名称</li>
+<li>-a -v：列出所有被编译的代码包的名称</li>
+<li>-p n：并行编译，其中n为并行的数量 如-p 2</li>
+<li>-n：打印编译过程中所需运行的命令，但并不执行这些命令</li>
+<li>-x：打印编译过程中所需运行的命令，并执行这些命令</li>
+<li>-work：显示编译时创建的临时工作目录的路径，并且不删除这个临时工作目录</li>
+</ul>
+<p>使用方式：如 <code>go run -v [fileName].go</code></p>
+<p><em>@TODO</em>: 暂时没找到指定临时工作目录的方法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/GolangNotes/golang-step-1/1_2_Cmd/" data-id="ck33wf1lg00jo20npbypbn7qh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/golang-step-10-web/javascript-golang-time" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/GolangNotes/golang-step-10-web/javascript-golang-time/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/GolangNotes/golang-step-10-web/javascript-golang-time/">时间戳</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JavaScript和Golang的时间戳"><a href="#JavaScript和Golang的时间戳" class="headerlink" title="JavaScript和Golang的时间戳"></a><code>JavaScript</code>和<code>Golang</code>的时间戳</h1><p>在计算cookie的有效期时，前端使用<code>JavaScript</code>的时间戳， 后端使用<code>Golang</code>获得时间戳，比较确认是否在有效期内。</p>
+<p>但是<code>Golang</code> <code>Unix</code> 时间戳的时间零点和<code>JavaScript</code>的时间零点一致，但是时间单位不同。</p>
+<p><code>JavaScript</code></p>
+<ul>
+<li>时间零点 1970-01-01</li>
+<li>时间单位 毫秒</li>
+</ul>
+<p><code>Golang UnixNao</code></p>
+<ul>
+<li>时间零点 1970-01-01</li>
+<li>时间单位 秒或纳秒</li>
+</ul>
+<p>设计方法 <code>TimeToJavaScriptTime</code>将<code>Golang</code>的时间类型转换成相对于1970-01-01的毫秒</p>
+<p>在<code>JavaScript</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; x =new Date()</span><br><span class="line">2018-10-28T10:08:38.546Z</span><br><span class="line">&gt; x.getTime()</span><br><span class="line">1540721318546</span><br></pre></td></tr></table></figure>
+<p>在<code>Golang</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func TimeToJavaScriptTime(dtNow time.Time) int64 &#123;</span><br><span class="line">    dtMark, _ := time.Parse(&quot;20060102&quot;, &quot;19700101&quot;)</span><br><span class="line">    dur := dtNow.Sub(dtMark)</span><br><span class="line">    return dur.Nanoseconds() / 1e6</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述方法存在如下包中，欢迎引入</p>
+<p><code>github.com/devuser/golang-notes/webutils</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/GolangNotes/golang-step-10-web/javascript-golang-time/" data-id="ck33wf1lg00jr20npmmpl1cvp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/golang-step-1/0-1-CompileForWin" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/GolangNotes/golang-step-1/0-1-CompileForWin/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/GolangNotes/golang-step-1/0-1-CompileForWin/">Windows下编译Golang程序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>@Deprecated</em></p>
+<p>在Windows下编译Golang程序</p>
+<p>建议维持如下目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foo --&gt;src</span><br><span class="line">    --&gt;bin</span><br><span class="line">    --&gt;pkg</span><br></pre></td></tr></table></figure>
+<p>编译过程一般来说分成如下几步</p>
+<ol>
+<li><p>前从 <code>git/svn</code> 服务器抓取最新的版本</p>
+</li>
+<li><p>清理现场</p>
+</li>
+<li><p>获得时间戳，以便在后续编译过程中带入作为版本号的后缀</p>
+</li>
+<li><p>编译，携带若干参数（资源文件、不含调试信息、版本号，目标文件名称）</p>
+</li>
+<li><p>复制到特定文件夹</p>
+</li>
+<li><p>连同配置文件一起压缩，压缩文件带有上述时间戳</p>
+</li>
+<li><p>导出源代码，并压缩，压缩文件带有上述时间戳</p>
+</li>
+<li><p>清理现场</p>
+</li>
+</ol>
+<p>上述步骤连续做下来，没有一个工程师可以可以连续无差错做两遍。 这样的场景适合创建一个批处理文件，如果在Linux下的话就是Shell脚本文件。</p>
+<p>下面是一个批处理文件的示例，请参阅。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@echo off</span><br><span class="line">echo 编译打包命令如下</span><br><span class="line">echo ==========================================</span><br><span class="line">set /a t1=(1%time:~0,2%-100)*1</span><br><span class="line">if %t1% LSS 10 set t1=0%t1%</span><br><span class="line">set ymd_hm=%date:~0,4%%date:~5,2%%date:~8,2%%t1%%time:~3,2%%time:~6,2%</span><br><span class="line">set &quot;Version=v2.2.%ymd_hm%&quot;</span><br><span class="line">echo 版本号: %Version%</span><br><span class="line">@echo on</span><br><span class="line">go clean</span><br><span class="line">go build -o YOUR_PROGRAMNAME.exe -ldflags &quot;-s -w -X main._VERSION_ &apos;%Version%&apos;&quot;</span><br><span class="line">set PATH=%PATH%;C:\Program Files\WinRAR;</span><br><span class="line">copy YOUR_PROGRAMNAME.exe &quot;YOUR_PROGRAMNAME_v%ymd_hm%.exe&quot;</span><br><span class="line">rar a &quot;YOUR_PROGRAMNAME_v%ymd_hm%.ra_&quot; &quot;YOUR_PROGRAMNAME_v%ymd_hm%.exe&quot;</span><br><span class="line">@echo off</span><br><span class="line">echo ==========================================</span><br><span class="line">@echo on</span><br></pre></td></tr></table></figure>
+<p>如果要支持上述代码中的，在编译命令中引入版本号，那么需要在源代码文件， 即包含 <code>main</code> 方法的 <code>go</code> 文件中包含如下变量定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//如下变量供编译器使用，不适用于golint的修改建议</span><br><span class="line">var _VERSION_ = &quot;unknown&quot;</span><br></pre></td></tr></table></figure>
+<p>BTW</p>
+<ol>
+<li><p><code>golint</code> 认为上述变量命名不符合规范，请忽略之</p>
+</li>
+<li><p>关于 <code>Windows</code>下批处理文件的更多知识，请 <code>google</code> 之</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/GolangNotes/golang-step-1/0-1-CompileForWin/" data-id="ck33wf1lh00ju20npad3q5ow6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/golang-step-4-DB/4_1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/GolangNotes/golang-step-4-DB/4_1/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/GolangNotes/golang-step-4-DB/4_1/">数据库</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>鼓励针对每个项目，创建三个对应不同环境的数据 分别</p>
+<ul>
+<li>开发数据库 <code>mydb_development</code></li>
+<li>测试数据库 <code>mydb_test</code></li>
+<li>生产数据库 <code>mydb_production</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE IF EXISTS mydb_development;</span><br><span class="line">CREATE DATABASE IF NOT EXISTS mydb_development  default charset utf8 COLLATE utf8_general_ci;</span><br><span class="line">use mydb_development;</span><br><span class="line"></span><br><span class="line">DROP DATABASE IF EXISTS mydb_test;</span><br><span class="line">CREATE DATABASE IF NOT EXISTS mydb_test  default charset utf8 COLLATE utf8_general_ci;</span><br><span class="line">use mydb_test;</span><br><span class="line"></span><br><span class="line">DROP DATABASE IF EXISTS mydb_production;</span><br><span class="line">CREATE DATABASE IF NOT EXISTS mydb_production  default charset utf8 COLLATE utf8_general_ci;</span><br><span class="line">use mydb_production;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/GolangNotes/golang-step-4-DB/4_1/" data-id="ck33wf1li00jx20npnnnlzrky" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-行走的铅笔/小普陀，洱海" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/行走的铅笔/小普陀，洱海/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/创作中/">创作中</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/行走的铅笔/小普陀，洱海/">小普陀，洱海</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/2359750-2d80e867e36a0172.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="神配图"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2359750-20727a5bf2236526.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="神配图"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2359750-973bc6bd2a0ec041.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="神配图"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2359750-47ffa51266a7e11e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="神配图"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2359750-16b788ed49b90685.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="神配图"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2359750-52ab1fd5a7fe2008.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="神配图"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/行走的铅笔/小普陀，洱海/" data-id="ck33wf1jo00fp20npd40yp88k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/创作中/">创作中</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/golang-step-9-gin/9_1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/GolangNotes/golang-step-9-gin/9_1/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/GolangNotes/golang-step-9-gin/9_1/">Gin框架介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Gin框架介绍"><a href="#Gin框架介绍" class="headerlink" title="Gin框架介绍"></a>Gin框架介绍</h1><h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ol>
+<li><p>确认本地环境的<code>$GOPATH</code></p>
+<ul>
+<li><code>Windows</code> 下使用 <code>echo %GOPATH%</code></li>
+<li><code>Linux</code> 下使用<code>echo $GOPATH</code></li>
+</ul>
+</li>
+<li><p>获取远程包 <code>go get github.com/gin-gonic/gin</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//升级安装请增加参数 -u</span><br><span class="line">go get -u github.com/gin-gonic/gin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输入<code>go version</code>确认本地环境的<code>Golang</code>版本</p>
+</li>
+</ol>
+<h1 id="第一个案例程序"><a href="#第一个案例程序" class="headerlink" title="第一个案例程序"></a>第一个案例程序</h1><ol>
+<li>在您的<code>$GOPATH</code>目录下创建子文件夹 <code>$GOPATH/src/gin-first</code></li>
+<li>切换到上述子文件夹下创建 <code>main.go</code></li>
+<li>复制如下内容到<code>main.go</code></li>
+</ol>
+<h2 id="First"><a href="#First" class="headerlink" title="First"></a>First</h2><ol>
+<li>创建如下文件夹 <code>$GOPATH/src/gin-first</code></li>
+<li>在上述文件夹下创建<code>main.go</code></li>
+<li>复制下面的内容到<code>main.go</code></li>
+<li>在命令行窗口中运行 <code>go run main.go</code></li>
+<li>在浏览器中打开 <code>http://127.0.0.1:8080/ping</code>可以看到返回内容<code>pong</code></li>
+</ol>
+<p>如果您使用<code>macOS</code>或<code>Linux</code>，您也可以在<code>Shell</code>窗口中输入如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:8080/ping</span><br></pre></td></tr></table></figure>
+<p>看到返回 <code>pong</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;github.com/gin-gonic/gin&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    r := gin.Default()</span><br><span class="line">    r.GET(&quot;/ping&quot;, func(c *gin.Context) &#123;</span><br><span class="line">        c.JSON(200, gin.H&#123;</span><br><span class="line">            &quot;message&quot;: &quot;pong&quot;,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    r.Run() // listen and serve on 0.0.0.0:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><ol>
+<li>上述子文件夹下运行 <code>go run main.go</code></li>
+<li>将看到输出内容 <code>[GIN-debug] Listening and serving HTTP on :8080</code></li>
+<li>打开浏览器访问 <code>http://127.0.0.1:8080/ping</code> 可以看到返回<code>pong</code></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/GolangNotes/golang-step-9-gin/9_1/" data-id="ck33wf1lj00k320npaerpi31y" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-思维模型/一把茶壶" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/24/思维模型/一把茶壶/" class="article-date">
+  <time datetime="2018-11-24T11:55:00.000Z" itemprop="datePublished">2018-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/思维模型/">思维模型</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/思维模型/一把茶壶/">一把茶壶</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>金融街笔记20180607</p>
+<p>早些年经常去三里屯地下散步，看看各种店铺，和电器超市。某一天在一家日式风格店里看到一把茶壶，很是欢喜，价格<strong>1500</strong>不贵。但是这茶壶拿回去很容易碎，碎掉后这价格就太贵了。忍着。</p>
+<p>承诺自己年底赚到一百万，就过来秒杀这把茶壶。</p>
+<p>年底赚到一百万，再回到这家店里把玩这把茶壶，价格依旧，我的感觉却没有当初的欢喜。自然也就不会秒杀，这件事情也就不了了之。</p>
+<p>世间多少事都是这样呢？设定一个目标，念兹在兹，达成了却失去当初的欢喜。</p>
+<p>我们就在这样的轮回中<strong>享受过程的欢喜</strong>。一个具体物件，一个外化的目标，到终点反而变得没有那么重要。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2018/11/24/思维模型/一把茶壶/" data-id="ck33wf1hn009p20np9eoey3bi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/思维模型/">思维模型</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/27/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/29/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Golang/">Golang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-DevOps/">Linux DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/面试题/">面试题</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/习作/">习作</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/人力资源/">人力资源</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人力资源/面试/">面试</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/创作中/">创作中</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Taro/">Taro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/mpvue/">mpvue</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/">思维模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/作战半径/">作战半径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/思维模型/思维陷阱/">思维陷阱</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Alpine/">Alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gin/">Gin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JD/">JD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Taro/">Taro</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mpvue/">mpvue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nohup/">nohup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/习作/">习作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人力资源/">人力资源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作战半径/">作战半径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创作中/">创作中</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/卢作孚/">卢作孚</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图书/">图书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/天龙八部/">天龙八部</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安邦/">安邦</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小数定律/">小数定律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小程序/">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/岗位说明书/">岗位说明书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/岳麓书院/">岳麓书院</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左宗棠/">左宗棠</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/巨婴/">巨婴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/巨婴女/">巨婴女</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幂律分布/">幂律分布</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/彼得原理/">彼得原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/彼得林奇/">彼得林奇</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微信/">微信</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维模型/">思维模型</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思维陷阱/">思维陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/房地产/">房地产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术栈/">技术栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/招商银行/">招商银行</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/昆山/">昆山</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/曾国藩/">曾国藩</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/清单管理-英语/">清单管理 - 英语</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/猎头/">猎头</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/知识图谱/">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/社会学/">社会学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/金融街/">金融街</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试题/">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Alpine/" style="font-size: 11px;">Alpine</a> <a href="/tags/Docker/" style="font-size: 17px;">Docker</a> <a href="/tags/Gin/" style="font-size: 10px;">Gin</a> <a href="/tags/Golang/" style="font-size: 19px;">Golang</a> <a href="/tags/JD/" style="font-size: 10px;">JD</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Taro/" style="font-size: 18px;">Taro</a> <a href="/tags/mpvue/" style="font-size: 15px;">mpvue</a> <a href="/tags/nohup/" style="font-size: 10px;">nohup</a> <a href="/tags/习作/" style="font-size: 16px;">习作</a> <a href="/tags/人力资源/" style="font-size: 11px;">人力资源</a> <a href="/tags/作战半径/" style="font-size: 11px;">作战半径</a> <a href="/tags/创作中/" style="font-size: 20px;">创作中</a> <a href="/tags/卢作孚/" style="font-size: 10px;">卢作孚</a> <a href="/tags/图书/" style="font-size: 10px;">图书</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/天龙八部/" style="font-size: 10px;">天龙八部</a> <a href="/tags/安邦/" style="font-size: 10px;">安邦</a> <a href="/tags/小数定律/" style="font-size: 10px;">小数定律</a> <a href="/tags/小程序/" style="font-size: 11px;">小程序</a> <a href="/tags/岗位说明书/" style="font-size: 10px;">岗位说明书</a> <a href="/tags/岳麓书院/" style="font-size: 10px;">岳麓书院</a> <a href="/tags/左宗棠/" style="font-size: 10px;">左宗棠</a> <a href="/tags/巨婴/" style="font-size: 10px;">巨婴</a> <a href="/tags/巨婴女/" style="font-size: 10px;">巨婴女</a> <a href="/tags/幂律分布/" style="font-size: 10px;">幂律分布</a> <a href="/tags/彼得原理/" style="font-size: 10px;">彼得原理</a> <a href="/tags/彼得林奇/" style="font-size: 11px;">彼得林奇</a> <a href="/tags/微信/" style="font-size: 11px;">微信</a> <a href="/tags/思维模型/" style="font-size: 16px;">思维模型</a> <a href="/tags/思维陷阱/" style="font-size: 10px;">思维陷阱</a> <a href="/tags/房地产/" style="font-size: 12px;">房地产</a> <a href="/tags/技术栈/" style="font-size: 10px;">技术栈</a> <a href="/tags/招商银行/" style="font-size: 10px;">招商银行</a> <a href="/tags/昆山/" style="font-size: 10px;">昆山</a> <a href="/tags/曾国藩/" style="font-size: 10px;">曾国藩</a> <a href="/tags/清单管理-英语/" style="font-size: 10px;">清单管理 - 英语</a> <a href="/tags/猎头/" style="font-size: 10px;">猎头</a> <a href="/tags/知识图谱/" style="font-size: 11px;">知识图谱</a> <a href="/tags/社会学/" style="font-size: 10px;">社会学</a> <a href="/tags/金融街/" style="font-size: 14px;">金融街</a> <a href="/tags/面试/" style="font-size: 11px;">面试</a> <a href="/tags/面试题/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/18/行走的铅笔/奥森公园/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/GolangNotes/todo/README 2/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/README/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/18/todo/00-03-配置服务器Apache+SSL/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 大眼铅笔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
