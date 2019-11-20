@@ -87,34 +87,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/随扈的耐力/" data-id="ck33wmxqi00im4mnppokcvk22" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-行走的铅笔/革命的领导权" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/革命的领导权/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="革命的领导权"><a href="#革命的领导权" class="headerlink" title="革命的领导权"></a>革命的领导权</h1><p>金融街笔记20180611<br>革命的领导权问题，始终是最关键问题。革命环境越是恶劣，领导权斗争不是放松了，而是更加激烈。<br>评价某家公司最近发生的变化。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/革命的领导权/" data-id="ck33wmxqc00ij4mnpfgksvhna" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/随扈的耐力/" data-id="ck36qzrkt00jn0xpflz1v227c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -152,7 +125,66 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/透过金瓶梅看经商之道/" data-id="ck33wmxq600if4mnpk2whgcg2" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/透过金瓶梅看经商之道/" data-id="ck36qzrks00jl0xpf9vqnkdk6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/1-1-开始第一个程序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/GolangNotes/1-1-开始第一个程序/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>打开<code>Shell</code>窗口或Windows下的命令行窗口，切换到<code>$GOPATH\src</code>文件夹。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd $GOPATH</span><br><span class="line">mkdir -p github.com/devuser/golang-notes/golang-step-1/helloworld</span><br><span class="line">touch github.com/devuser/golang-notes/golang-step-1/helloworld/main.go</span><br><span class="line">cd github.com/devuser/golang-notes/golang-step-1/helloworld</span><br></pre></td></tr></table></figure>
+<p>如果在Windows下需要将<code>$GOPATH</code>修改成<code>%GOPATH%</code>。<br>上述<code>mkdir -p</code>也要查询如何之后做调整。<br><code>touch</code>用来创建一个空文件，如果在Windows下可以输入<code>nodepad</code>打开一个空文件。</p>
+<p>复制如下代码到<code>main.go</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">	fmt.Println(&quot;Hello world!&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>保存。</p>
+<h2 id="使用build命令"><a href="#使用build命令" class="headerlink" title="使用build命令"></a>使用<code>build</code>命令</h2><p>回到<code>Shell</code>窗口或Windows下的命令行窗口。<br>输入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+<p>看到输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
+<p>如果要编译成可执行文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go build -o helloworld main.go</span><br><span class="line">chmod +x helloworld</span><br><span class="line">./helloworld</span><br></pre></td></tr></table></figure></p>
+<p>或Windows下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go build -o helloworld.exe main.go</span><br><span class="line">.\helloworld.exe</span><br></pre></td></tr></table></figure></p>
+<p>使用上述命令可以编译产生可以执行文件。</p>
+<p>当然您可以把可执行文件保存在<code>$GOPATH/bin</code>目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go build -o $GOPATH/bin/helloworld main.go</span><br><span class="line">chmod +x $GOPATH/bin/helloworld</span><br><span class="line">$GOPATH/bin/helloworld</span><br></pre></td></tr></table></figure></p>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>建议在环境变量中修改，把<code>$GOPATH/bin</code>添加到<code>$PATH</code>中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$PATH=$GOPATH/bin:$PATH</span><br></pre></td></tr></table></figure></p>
+<h2 id="go-run-使用"><a href="#go-run-使用" class="headerlink" title="go run 使用"></a><code>go run</code> 使用</h2><ul>
+<li><code>go run [fileName].go</code> 用于执行go的源代码 如go run helloworld.go</li>
+<li><code>go run [fileName].go -argK=argV</code> 带参数[argK]执行go的源代码</li>
+</ul>
+<p>笔者常用的命令方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run XXX.go -ini=XXX.json -log=XXX.log</span><br></pre></td></tr></table></figure>
+<p><code>go run</code> 常用标记</p>
+<ul>
+<li>-a：强制编译相关代码，无论是否编译过</li>
+<li>-v：列出被编译的代码包的名称</li>
+<li>-a -v：列出所有被编译的代码包的名称</li>
+<li>-p n：并行编译，其中n为并行的数量 如-p 2</li>
+<li>-n：打印编译过程中所需运行的命令，但并不执行这些命令</li>
+<li>-x：打印编译过程中所需运行的命令，并执行这些命令</li>
+<li>-work：显示编译时创建的临时工作目录的路径，并且不删除这个临时工作目录</li>
+</ul>
+<p>使用方式：如 <code>go run -v [fileName].go</code></p>
+<p><em>@TODO</em>: 暂时没找到指定临时工作目录的方法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/1-1-开始第一个程序/" data-id="ck36qzr7u001g0xpftr17yez4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -185,91 +217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/选择供应商的三个原则/" data-id="ck33wmxpw00ic4mnpmbg8dcv7" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-行走的铅笔/跃迁" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/跃迁/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="跃迁"><a href="#跃迁" class="headerlink" title="跃迁"></a><strong>跃迁</strong></h1><p>金融街笔记20180617<br>跃迁这本书是去年在樊登读书会听樊登老师介绍的。<br>他第一次让我用物理学里面经常提到的跃迁，来思考努力演变升级的过程在这个过程中间存在着非连续性就是跃迁。</p>
-<p>也可以用过去，我们学习哲学的时候老师讲的从量变导致边有一个过程，类似的还有一本书，它的名字叫瞬变，瞬间的瞬。<br>瞬变这本书强调你向客户去营销，去兜售客户接受作出决策的过程是存在的一个瞬间的变化。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/跃迁/" data-id="ck33wmxpt00ia4mnpbh3skqxx" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-行走的铅笔/谢安的故事" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/谢安的故事/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>谢安在下棋，接到侄子谢玄从淝水之战前线发来捷报，谢安继续下棋。下完棋去换衣服，过门槛的时候谢安木屐碰到门槛，碰掉而不知。</p>
-<p>年轻的时候，很鄙视谢安这段装。<br>一六年一七年，亲自经历两次捷报传来，增进对谢安的理解。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/谢安的故事/" data-id="ck33wmxpr00i94mnp5nd09a1l" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-行走的铅笔/资源稀缺型社会" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/行走的铅笔/资源稀缺型社会/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="资源稀缺型社会"><a href="#资源稀缺型社会" class="headerlink" title="资源稀缺型社会"></a><strong>资源稀缺型社会</strong></h1><p>金融街笔记20180620<br>最近经常提到一个多么痛的领悟，[资源稀缺型社会]。</p>
-<p>这个词，概括了我们这一代人的生活主题。<br>尽管我万幸逃脱了这个词的约束，但是我的大脑始终笼罩在它的阴云之下，决策的时候忍不住从资源稀缺的角度出发。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/资源稀缺型社会/" data-id="ck33wmxpp00i84mnpzaanj88p" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/选择供应商的三个原则/" data-id="ck36qzrkr00jj0xpftfd12tey" class="article-share-link">Share</a>
       
       
     </footer>
@@ -298,7 +246,63 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/远离/" data-id="ck33wmxpk00i74mnpf37cu0bq" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/远离/" data-id="ck36qzrkp00jh0xpfawbkqnp4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-行走的铅笔/资源稀缺型社会" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/行走的铅笔/资源稀缺型社会/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="资源稀缺型社会"><a href="#资源稀缺型社会" class="headerlink" title="资源稀缺型社会"></a><strong>资源稀缺型社会</strong></h1><p>金融街笔记20180620<br>最近经常提到一个多么痛的领悟，[资源稀缺型社会]。</p>
+<p>这个词，概括了我们这一代人的生活主题。<br>尽管我万幸逃脱了这个词的约束，但是我的大脑始终笼罩在它的阴云之下，决策的时候忍不住从资源稀缺的角度出发。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/资源稀缺型社会/" data-id="ck36qzrkl00jd0xpf7p2zl9ym" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-行走的铅笔/跃迁" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/行走的铅笔/跃迁/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="跃迁"><a href="#跃迁" class="headerlink" title="跃迁"></a><strong>跃迁</strong></h1><p>金融街笔记20180617<br>跃迁这本书是去年在樊登读书会听樊登老师介绍的。<br>他第一次让我用物理学里面经常提到的跃迁，来思考努力演变升级的过程在这个过程中间存在着非连续性就是跃迁。</p>
+<p>也可以用过去，我们学习哲学的时候老师讲的从量变导致边有一个过程，类似的还有一本书，它的名字叫瞬变，瞬间的瞬。<br>瞬变这本书强调你向客户去营销，去兜售客户接受作出决策的过程是存在的一个瞬间的变化。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/跃迁/" data-id="ck36qzrkk00jc0xpfvj0u7s6j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -389,7 +393,35 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/谈谈支付系统/" data-id="ck33wmxpj00i64mnp48sqab43" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/谈谈支付系统/" data-id="ck36qzrkj00jb0xpfhl9r912k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-行走的铅笔/谢安的故事" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/行走的铅笔/谢安的故事/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>谢安在下棋，接到侄子谢玄从淝水之战前线发来捷报，谢安继续下棋。下完棋去换衣服，过门槛的时候谢安木屐碰到门槛，碰掉而不知。</p>
+<p>年轻的时候，很鄙视谢安这段装。<br>一六年一七年，亲自经历两次捷报传来，增进对谢安的理解。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/谢安的故事/" data-id="ck36qzrki00ja0xpfae6jqqpb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -421,7 +453,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/谈谈易经/" data-id="ck33wmxph00i44mnpe6iv0zlu" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/谈谈易经/" data-id="ck36qzrkg00j80xpfshhkl0dx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -488,11 +520,15 @@
       <ul>
         
           <li>
+            <a href="/2019/11/20/golang-dlv-index/">golang/dlv/index</a>
+          </li>
+        
+          <li>
             <a href="/2019/11/18/README/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2019/11/18/GolangNotes/todo/README 2/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/common/">(no title)</a>
           </li>
         
           <li>
@@ -501,10 +537,6 @@
         
           <li>
             <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/18/GolangNotes/todo/common/">(no title)</a>
           </li>
         
       </ul>
