@@ -72,6 +72,10 @@
   <time datetime="2019-11-20T03:41:16.000Z" itemprop="datePublished">2019-11-20</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -80,7 +84,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/20/golang-dlv-index/">golang/dlv/index</a>
+      <a class="article-title" href="/2019/11/20/golang-dlv-index/">官方推荐Golang调试工具delve</a>
     </h1>
   
 
@@ -88,13 +92,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><code>Delve</code>是一款中针对Golang源代码级的调试器，自身也使用Golang开发。</p>
+<p>交互式调试进程执行，支持变量取值，查看线程或goroutine状态，查看CPU寄存器状态。</p>
+<p>致力于成为面向Golang的简单高效的调试器。</p>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>官方推荐的Golang调试工具delve，在Github的项目地址: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/go-delve/delve</span><br></pre></td></tr></table></figure>
+<p>macOS安装步骤</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> xcode-select --install</span></span><br></pre></td></tr></table></figure>
+<p>部分用户可能需要执行如下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo /usr/sbin/DevToolsSecurity -<span class="built_in">enable</span></span></span><br></pre></td></tr></table></figure>
+<p>切换到<code>$GOPATH/src</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> go get -u github.com/go-delve/delve/cmd/dlv</span></span><br></pre></td></tr></table></figure>
+<p>执行<code>dlv</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dlv version</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g94dg08to2j30qs04uq51.jpg" alt="image-20191120120301400"></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g94dkajcw1j319w0dan4g.jpg" alt="image-20191120120708040"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/20/golang-dlv-index/" data-id="ck36qzr3500080xpf0kb0pyu1" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/20/golang-dlv-index/" data-id="ck36rn4yw000427pfy4eyvp1p" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
     </footer>
   </div>
   
@@ -102,9 +123,9 @@
 
 
   
-    <article id="post-README" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-行走的铅笔/Golang-Windows版本" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/11/18/README/" class="article-date">
+    <a href="/2019/11/18/行走的铅笔/Golang-Windows版本/" class="article-date">
   <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
 </a>
     
@@ -114,106 +135,78 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最初在简书撰写，但是考虑到意外丢失的风险，特别在 <code>Github</code>做一个备份。</p>
-<p>内容包括本人关注的技术领域，自己非技术的创作，思想点滴。 特别推荐清单管理和思维模型两个<code>part</code>，希望可以让更多的读者受益。</p>
-<ul>
-<li><a href="金融街笔记/卢作孚.md">金融街笔记/卢作孚</a></li>
-</ul>
+        <!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golang Windows版本</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">Golang Windows版本</h1>
+        <div class="show-content">
+          <p>1. 目前支持Windows XP的最高版本是 `go version go1.10.7 windows/386`</p><p>2. 在Windows XP下安装 `golang 1.12.1` 提示需要 `Windows 7 SP1`</p><p><br></p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2359750-6db9a1ecc993bc7b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/README/" data-id="ck36qzr2400040xpfng3bfe8n" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-GolangNotes/todo/common" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/GolangNotes/todo/common/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>基本配置</p>
-<ul>
-<li>候选币种 候选单位</li>
-<li>币种</li>
-<li><p>候选单位 [元： 1 万元 10000 亿元: ]</p>
-<h1 id="页码"><a href="#页码" class="headerlink" title=".页码"></a>.页码</h1><h1 id="导出的页数限制"><a href="#导出的页数限制" class="headerlink" title=".导出的页数限制"></a>.导出的页数限制</h1><h1 id="导出文件清单"><a href="#导出文件清单" class="headerlink" title=".导出文件清单"></a>.导出文件清单</h1><p>导出文件时发出请求，请求等待，发送文件清单，保存文件，发出导出文件请求，发送文件，任务结束，月底时将文件删除。我们对于导出文件太大时可以压缩文件。</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/common/" data-id="ck36qzrma00le0xpfd3d1w3mv" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-GolangNotes/todo/AppID" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/GolangNotes/todo/AppID/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h1><ul>
-<li>AppID: <em>wxdccc3a094de0e910</em></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/AppID/" data-id="ck36qzrm900ld0xpfxdwqejlz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-GolangNotes/todo/log" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/GolangNotes/todo/log/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>id event subevent message operator(system)  create_at</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/log/" data-id="ck36qzrm700lc0xpfrm2eie07" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/行走的铅笔/Golang-Windows版本/" data-id="ck36rn56h00bo27pf9zlodl0v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -251,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/charts/" data-id="ck36qzrm600la0xpf3nkcgv4m" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/charts/" data-id="ck36rn5al00kx27pf56kbhi73" class="article-share-link">Share</a>
       
       
     </footer>
@@ -261,9 +254,64 @@
 
 
   
-    <article id="post-todo/00-02-编写您的第一个小程序" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-GolangNotes/todo/AppID" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/11/18/todo/00-02-编写您的第一个小程序/" class="article-date">
+    <a href="/2019/11/18/GolangNotes/todo/AppID/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h1><ul>
+<li>AppID: <em>wxdccc3a094de0e910</em></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/AppID/" data-id="ck36rn5ak00kv27pfq07fl71n" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/todo/20161108" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/GolangNotes/todo/20161108/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><h2 id="关键任务"><a href="#关键任务" class="headerlink" title="关键任务"></a>关键任务</h2><h2 id="连接方式"><a href="#连接方式" class="headerlink" title="连接方式"></a>连接方式</h2><h2 id="开发机器的IP地址"><a href="#开发机器的IP地址" class="headerlink" title="开发机器的IP地址"></a>开发机器的IP地址</h2><h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/20161108/" data-id="ck36rn5aj00ks27pfx362be3e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GolangNotes/todo/index" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/GolangNotes/todo/index/" class="article-date">
   <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
 </a>
     
@@ -277,33 +325,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/todo/00-02-编写您的第一个小程序/" data-id="ck36qzr5p000i0xpf5rrqe9mg" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-todo/00-04-配置服务器Nginx+SSL" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/18/todo/00-04-配置服务器Nginx+SSL/" class="article-date">
-  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/todo/00-04-配置服务器Nginx+SSL/" data-id="ck36qzr5s000j0xpfl7tuwuod" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/GolangNotes/todo/index/" data-id="ck36rn5a400jp27pfxeco0ass" class="article-share-link">Share</a>
       
       
     </footer>
@@ -329,7 +351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/todo/00-01-小程序启程/" data-id="ck36qzr5t000k0xpfat2bwi0f" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/todo/00-01-小程序启程/" data-id="ck36rn50k000m27pfojmwkpjh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -339,9 +361,9 @@
 
 
   
-    <article id="post-todo/00-05-编写小程序服务端的HelloWorld" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-todo/00-02-编写您的第一个小程序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/11/18/todo/00-05-编写小程序服务端的HelloWorld/" class="article-date">
+    <a href="/2019/11/18/todo/00-02-编写您的第一个小程序/" class="article-date">
   <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
 </a>
     
@@ -355,7 +377,59 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/todo/00-05-编写小程序服务端的HelloWorld/" data-id="ck36qzr5v000l0xpfhbo23v70" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/todo/00-02-编写您的第一个小程序/" data-id="ck36rn50n000n27pfqm1yrk5p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-todo/00-03-配置服务器Apache+SSL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/todo/00-03-配置服务器Apache+SSL/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/todo/00-03-配置服务器Apache+SSL/" data-id="ck36rn50q000o27pf6stt5ydb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-todo/00-04-配置服务器Nginx+SSL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/18/todo/00-04-配置服务器Nginx+SSL/" class="article-date">
+  <time datetime="2019-11-18T03:51:45.000Z" itemprop="datePublished">2019-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/18/todo/00-04-配置服务器Nginx+SSL/" data-id="ck36rn50s000p27pfzxlsu3sa" class="article-share-link">Share</a>
       
       
     </footer>
@@ -422,15 +496,15 @@
       <ul>
         
           <li>
-            <a href="/2019/11/20/golang-dlv-index/">golang/dlv/index</a>
+            <a href="/2019/11/20/golang-dlv-index/">官方推荐Golang调试工具delve</a>
           </li>
         
           <li>
-            <a href="/2019/11/18/README/">(no title)</a>
+            <a href="/2019/11/18/行走的铅笔/Golang-Windows版本/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2019/11/18/GolangNotes/todo/common/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/charts/">(no title)</a>
           </li>
         
           <li>
@@ -438,7 +512,7 @@
           </li>
         
           <li>
-            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/20161108/">(no title)</a>
           </li>
         
       </ul>

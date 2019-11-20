@@ -5,20 +5,23 @@
   
 
   
-  <title>golang/dlv/index | 大眼铅笔</title>
+  <title>官方推荐Golang调试工具delve | 大眼铅笔</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简书大眼铅笔的原始文稿">
-<meta name="keywords" content="大眼铅笔 Taro Golang AI bigdata bigeyepencil Spark">
+  <meta name="description" content="Delve是一款中针对Golang源代码级的调试器，自身也使用Golang开发。 交互式调试进程执行，支持变量取值，查看线程或goroutine状态，查看CPU寄存器状态。 致力于成为面向Golang的简单高效的调试器。 安装步骤官方推荐的Golang调试工具delve，在Github的项目地址:  1https://github.com/go-delve/delve macOS安装步骤 1$ x">
+<meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang&#x2F;dlv&#x2F;index">
+<meta property="og:title" content="官方推荐Golang调试工具delve">
 <meta property="og:url" content="https://devuser.github.io/bigeyepencil/2019/11/20/golang-dlv-index/index.html">
 <meta property="og:site_name" content="大眼铅笔">
-<meta property="og:description" content="简书大眼铅笔的原始文稿">
+<meta property="og:description" content="Delve是一款中针对Golang源代码级的调试器，自身也使用Golang开发。 交互式调试进程执行，支持变量取值，查看线程或goroutine状态，查看CPU寄存器状态。 致力于成为面向Golang的简单高效的调试器。 安装步骤官方推荐的Golang调试工具delve，在Github的项目地址:  1https://github.com/go-delve/delve macOS安装步骤 1$ x">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-11-20T03:41:16.000Z">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g94dg08to2j30qs04uq51.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g94dkajcw1j319w0dan4g.jpg">
+<meta property="og:updated_time" content="2019-11-20T04:07:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="golang&#x2F;dlv&#x2F;index">
-<meta name="twitter:description" content="简书大眼铅笔的原始文稿">
+<meta name="twitter:title" content="官方推荐Golang调试工具delve">
+<meta name="twitter:description" content="Delve是一款中针对Golang源代码级的调试器，自身也使用Golang开发。 交互式调试进程执行，支持变量取值，查看线程或goroutine状态，查看CPU寄存器状态。 致力于成为面向Golang的简单高效的调试器。 安装步骤官方推荐的Golang调试工具delve，在Github的项目地址:  1https://github.com/go-delve/delve macOS安装步骤 1$ x">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g94dg08to2j30qs04uq51.jpg">
   
     <link rel="alternate" href="/atom.xml" title="大眼铅笔" type="application/atom+xml">
   
@@ -71,6 +74,10 @@
   <time datetime="2019-11-20T03:41:16.000Z" itemprop="datePublished">2019-11-20</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Golang/">Golang</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -79,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      golang/dlv/index
+      官方推荐Golang调试工具delve
     </h1>
   
 
@@ -87,13 +94,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><code>Delve</code>是一款中针对Golang源代码级的调试器，自身也使用Golang开发。</p>
+<p>交互式调试进程执行，支持变量取值，查看线程或goroutine状态，查看CPU寄存器状态。</p>
+<p>致力于成为面向Golang的简单高效的调试器。</p>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>官方推荐的Golang调试工具delve，在Github的项目地址: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/go-delve/delve</span><br></pre></td></tr></table></figure>
+<p>macOS安装步骤</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> xcode-select --install</span></span><br></pre></td></tr></table></figure>
+<p>部分用户可能需要执行如下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo /usr/sbin/DevToolsSecurity -<span class="built_in">enable</span></span></span><br></pre></td></tr></table></figure>
+<p>切换到<code>$GOPATH/src</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> go get -u github.com/go-delve/delve/cmd/dlv</span></span><br></pre></td></tr></table></figure>
+<p>执行<code>dlv</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dlv version</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g94dg08to2j30qs04uq51.jpg" alt="image-20191120120301400"></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g94dkajcw1j319w0dan4g.jpg" alt="image-20191120120708040"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/20/golang-dlv-index/" data-id="ck36qzr3500080xpf0kb0pyu1" class="article-share-link">Share</a>
+      <a data-url="https://devuser.github.io/bigeyepencil/2019/11/20/golang-dlv-index/" data-id="ck36rn4yw000427pfy4eyvp1p" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li></ul>
+
     </footer>
   </div>
   
@@ -101,7 +125,7 @@
 <nav id="article-nav">
   
   
-    <a href="/2019/11/18/README/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/11/18/行走的铅笔/Golang-Windows版本/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title"></div>
     </a>
@@ -161,15 +185,15 @@
       <ul>
         
           <li>
-            <a href="/2019/11/20/golang-dlv-index/">golang/dlv/index</a>
+            <a href="/2019/11/20/golang-dlv-index/">官方推荐Golang调试工具delve</a>
           </li>
         
           <li>
-            <a href="/2019/11/18/README/">(no title)</a>
+            <a href="/2019/11/18/行走的铅笔/Golang-Windows版本/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2019/11/18/GolangNotes/todo/common/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/charts/">(no title)</a>
           </li>
         
           <li>
@@ -177,7 +201,7 @@
           </li>
         
           <li>
-            <a href="/2019/11/18/GolangNotes/todo/log/">(no title)</a>
+            <a href="/2019/11/18/GolangNotes/todo/20161108/">(no title)</a>
           </li>
         
       </ul>
